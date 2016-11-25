@@ -9,7 +9,7 @@
 #import "ELShareService.h"
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
-
+#import "WXApi.h"
 
 @interface ELShareService()<WXApiDelegate,TencentSessionDelegate,QQApiInterfaceDelegate>
 

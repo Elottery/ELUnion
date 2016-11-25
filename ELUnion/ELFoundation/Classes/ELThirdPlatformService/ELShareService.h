@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WXApi.h"
+
 #import "ELPlatform.h"
 
 typedef void(^ELShareServiceComplete)(BOOL success,NSError *error);
