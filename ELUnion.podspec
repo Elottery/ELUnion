@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
     spec.homepage         = 'https://github.com/Elottery'
     spec.license          = { :type => 'MIT', :file => 'LICENSE' }
     spec.author           = { 'NicolasKim' => 'jinqiucheng1006@live.cn' }
-    spec.source           = { :git => 'https://github.com/Elottery/ELUnion.git', :branch => spec.version}
+    spec.source           = { :git => 'https://github.com/Elottery/ELUnion.git', :tag => spec.version}
     spec.ios.deployment_target = '8.0'
     spec.header_dir = 'ELUnion'
     spec.default_subspec = 'ELUIKit'
