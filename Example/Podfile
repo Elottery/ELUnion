@@ -1,0 +1,5 @@
+
+target 'ELUnion_Example' do
+  pod 'ELUnion', :path => '../'
+  
+end
