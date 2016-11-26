@@ -58,7 +58,7 @@
     
     
     
-    if (self.parentViewController == self.navigationController) {
+    if (self.parentViewController == self.navigationController && self.parentViewController != nil) {
         [self.view addSubview:self.el_navigationBar];
         self.el_navigationBar.backBtnType = [self backBtnType];
         _navigationBarTopConstraint = [NSLayoutConstraint constraintWithItem:_el_navigationBar
