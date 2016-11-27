@@ -79,6 +79,7 @@
 
 
 -(CGRect)rectForItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self prepareLayout];
     return [self.attrArr[indexPath.row] frame];
 }
 
@@ -355,7 +356,9 @@
             self.bodyTitles = self.dataSource(selectIndex);
             [self.bodyCollectionView reloadData];
         }
-        self.titleRect = [(_TitleFlowLayout *)self.titleCollectionView.collectionViewLayout rectForItemAtIndexPath:[NSIndexPath indexPathForRow:selectIndex inSection:0]];
+        _TitleFlowLayout *layout = (_TitleFlowLayout *)self.titleCollectionView.collectionViewLayout;
+        
+        self.titleRect = [layout rectForItemAtIndexPath:[NSIndexPath indexPathForRow:selectIndex inSection:0]];
         
         [self setNeedsDisplay];
         
