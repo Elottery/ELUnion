@@ -101,8 +101,15 @@ static ELBaseNetworkingService * _sharedService;
 
 
 -(NSURLRequest *)URLRequestWithRequest:(id<ELRequestProtocol>)request andToken:(NSString *)token{
-//    id<ELRequestProtocol> requestObj = request;
-    NSData  * requestData = [[request toJSONString] dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSData  * requestData = nil;
+    if ([request respondsToSelector:@selector(isFileData)]&&[request isFileData]) {
+        requestData = [request fileData];
+    }
+    else{
+        requestData = [[request toJSONString] dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    
     //组装请求
     NSMutableURLRequest * URLRequest = nil;
     NSString * URLStr = [NSString stringWithFormat:@"%@",self.defaultConfig.HOST];

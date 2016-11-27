@@ -65,7 +65,7 @@
 @property (nonatomic,strong)UIView * topView;
 @property (nonatomic,strong)UIView * bottomView;
 @property (nonatomic,strong)NSLayoutConstraint * middleViewHeight;
-@property (nonatomic,strong)UIView * backgroundView;
+
 
 @property (nonatomic,strong)UITableView * middleView;
 @property (nonatomic,assign)CGFloat       middleViewMaxHeight;
@@ -166,9 +166,7 @@
     
     self.middleViewMaxHeight = view.bounds.size.height / 2 - 30 - 44 - 10;
     
-    [view addSubview:self.backgroundView];
-    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[BACKVIEW]-0-|" options:0 metrics:nil views:@{@"BACKVIEW":self.backgroundView}]];
-    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[BACKVIEW]-0-|" options:0 metrics:nil views:@{@"BACKVIEW":self.backgroundView}]];
+    
     
     [view addSubview:self];
     self.translatesAutoresizingMaskIntoConstraints = NO;
@@ -192,7 +190,7 @@
     self.transform = CGAffineTransformMakeTranslation(0, totalHeight);
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.transform = CGAffineTransformMakeTranslation(0, 0);
-        self.backgroundView.alpha = 0.5;
+        
     } completion:^(BOOL finished) {
         
     }];
@@ -206,14 +204,10 @@
    
     CGFloat middleViewHeight = self.middleViewMaxHeight < self.titles.count * BTN_HEIGHT ? self.middleViewMaxHeight : self.titles.count * BTN_HEIGHT;
     CGFloat totalHeight = 30 + 44 + middleViewHeight + 10;
-    
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.transform = CGAffineTransformMakeTranslation(0, totalHeight);
-        self.backgroundView.alpha = 0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
-        [self.backgroundView removeFromSuperview];
-        self.backgroundView = nil;
     }];
    
 }
@@ -222,12 +216,12 @@
     if (self.cancelHandler) {
         self.cancelHandler();
     }
-    [self dismissActionSheet];
+//    [self dismissActionSheet];
 }
 
--(void)backgroundMaskViewTap:(UITapGestureRecognizer *)tap{
-    [self dismissActionSheet];
-}
+//-(void)backgroundMaskViewTap:(UITapGestureRecognizer *)tap{
+//    [self dismissActionSheet];
+//}
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -260,21 +254,10 @@
     if (self.handler) {
         self.handler(indexPath.row);
     }
-    [self dismissActionSheet];
+//    [self dismissActionSheet];
 }
 
 
--(UIView *)backgroundView{
-    if (!_backgroundView) {
-        _backgroundView = [[UIView alloc]initWithFrame:CGRectZero];
-        _backgroundView.alpha = 0;
-        _backgroundView.backgroundColor = [UIColor blackColor];
-        _backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
-        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissActionSheet)];
-        [_backgroundView addGestureRecognizer:tap];
-    }
-    return _backgroundView;
-}
 
 -(UITableView *)middleView{
     if (!_middleView) {

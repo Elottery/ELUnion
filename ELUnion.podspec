@@ -56,7 +56,8 @@ Pod::Spec.new do |spec|
         cs.source_files =  ['ELUnion/ELUIKit/Classes/**/*.{h,m}']
         cs.private_header_files = ['ELUnion/ELUIKit/Classes/Category/ELBundleHelper.h',
                                    'ELUnion/ELUIKit/Classes/VIEW/ELActionSheet/ELShareActionSheetCell.h',
-                                   'ELUnion/ELUIKit/Classes/VIEW/ELActionSheet/ELShareActionSheet.h']
+                                   'ELUnion/ELUIKit/Classes/VIEW/ELActionSheet/ELShareActionSheet.h',
+                                   'ELUnion/ELUIKit/Classes/VIEW/ELActionSheet/ELActionSheet.h']
         cs.dependency      'ELUnion/ELFoundation'
         cs.dependency      'SDWebImage'
         cs.dependency      'DYMRollingBanner', '~> 2.1.7'
