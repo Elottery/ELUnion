@@ -31,6 +31,6 @@ typedef void(^ELTabViewTitleClickBlock)(NSUInteger titleIndex);
 
 @property (nonatomic,strong)NSArray<NSString *> * bodyTitles;
 
--(void)reloadData;
+//-(void)reloadData;
 
 @end

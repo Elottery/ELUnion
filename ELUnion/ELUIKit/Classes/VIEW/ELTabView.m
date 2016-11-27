@@ -218,21 +218,20 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
-    if (self.selectedIndex != -1) {
-        self.selectIndex = self.selectedIndex;
-    }
-    
-//    [self drawMaskLayer];
+//    if (self.selectedIndex != -1) {
+//        self.selectIndex = self.selectedIndex;
+//    }
 }
 
 - (void)drawRect:(CGRect)rect {
-    
+    [self drawMaskLayer:rect];
 }
 
-- (void)drawMaskLayer{
+- (void)drawMaskLayer:(CGRect)rect{
     [self layoutIfNeeded];
-    if (!CGRectIsEmpty(self.titleRect)) {
-        CGRect rect = self.bounds;
+//    if (!CGRectIsEmpty(self.titleRect)) {
+        self.titleRect = [(_TitleFlowLayout *)self.titleCollectionView.collectionViewLayout rectForItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndex inSection:0]];
+//        CGRect rect = self.bounds;
         CGMutablePathRef linePath =nil;
         
         linePath =CGPathCreateMutable();
@@ -251,7 +250,7 @@
         self.maskLayer.frame = rect;
         self.maskLayer.path = linePath;
         CGPathRelease(linePath);
-    }
+//    }
 }
 
 
@@ -292,7 +291,8 @@
             self.bodyTitles = self.dataSource(indexPath.row);
         }
         [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-        [self setSelectIndex:indexPath.row animated:NO];
+//        [self setSelectIndex:indexPath.row animated:NO];
+        [self setNeedsDisplay];
         if (self.titleDelegate) {
             self.titleDelegate(indexPath.row);
         }
@@ -341,6 +341,7 @@
 
 -(void)setSelectIndex:(NSInteger)selectIndex animated:(BOOL)animated{
     _selectIndex = selectIndex;
+    [self.titleCollectionView reloadData];
     if (animated) {
         self.targetTitleRect = [(_TitleFlowLayout *)self.titleCollectionView.collectionViewLayout rectForItemAtIndexPath:[NSIndexPath indexPathForRow:selectIndex inSection:0]];
         self.distance = self.targetTitleRect.origin.x - self.titleRect.origin.x;
@@ -355,7 +356,9 @@
             [self.bodyCollectionView reloadData];
         }
         self.titleRect = [(_TitleFlowLayout *)self.titleCollectionView.collectionViewLayout rectForItemAtIndexPath:[NSIndexPath indexPathForRow:selectIndex inSection:0]];
-        [self drawMaskLayer];
+        
+        [self setNeedsDisplay];
+        
         [self.titleCollectionView selectItemAtIndexPath:[NSIndexPath indexPathForRow:_selectIndex inSection:0] animated:NO scrollPosition:UICollectionViewScrollPositionNone];
     }
     
@@ -363,45 +366,15 @@
 
 
 
--(void)tiktoc:(CADisplayLink *)displayLink{
-    if (self.distance > 0) {
-        if (self.targetTitleRect.origin.x <= self.titleRect.origin.x) {
-            [displayLink invalidate];
-            self.titleRect = self.targetTitleRect;
-            [self drawMaskLayer];
-            [self.bodyCollectionView reloadData];
-            [self.titleCollectionView selectItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndex inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-        }
-        else{
-            CGFloat distancePerSecond = (self.distance)*displayLink.duration / 0.2;
-            self.titleRect = CGRectMake(self.titleRect.origin.x+distancePerSecond, self.titleRect.origin.y, self.titleRect.size.width, self.titleRect.size.height);
-            [self drawMaskLayer];
-        }
-    }
-    else{
-        if (self.targetTitleRect.origin.x >= self.titleRect.origin.x) {
-            [displayLink invalidate];
-            self.titleRect = self.targetTitleRect;
-            [self drawMaskLayer];
-            [self.bodyCollectionView reloadData];
-            [self.titleCollectionView selectItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndex inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-            
-        }
-        else{
-            CGFloat distancePerSecond = (self.distance)*displayLink.duration / 0.2;
-            self.titleRect = CGRectMake(self.titleRect.origin.x+distancePerSecond, self.titleRect.origin.y, self.titleRect.size.width, self.titleRect.size.height);
-            [self drawMaskLayer];
-        }
-    }
-}
 
 -(void)setTabTitles:(NSArray<NSString *> *)tabTitles{
     _tabTitles = tabTitles;
 }
 
--(void)reloadData{
-    [self.titleCollectionView reloadData];
-}
+//-(void)reloadData{
+//    [self.titleCollectionView reloadData];
+//    
+//}
 
 
 -(CAShapeLayer *)maskLayer{
@@ -416,6 +389,37 @@
     return _maskLayer;
 }
 
+//-(void)tiktoc:(CADisplayLink *)displayLink{
+//    if (self.distance > 0) {
+//        if (self.targetTitleRect.origin.x <= self.titleRect.origin.x) {
+//            [displayLink invalidate];
+//            self.titleRect = self.targetTitleRect;
+//            [self drawMaskLayer];
+//            [self.bodyCollectionView reloadData];
+//            [self.titleCollectionView selectItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndex inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+//        }
+//        else{
+//            CGFloat distancePerSecond = (self.distance)*displayLink.duration / 0.2;
+//            self.titleRect = CGRectMake(self.titleRect.origin.x+distancePerSecond, self.titleRect.origin.y, self.titleRect.size.width, self.titleRect.size.height);
+//            [self drawMaskLayer];
+//        }
+//    }
+//    else{
+//        if (self.targetTitleRect.origin.x >= self.titleRect.origin.x) {
+//            [displayLink invalidate];
+//            self.titleRect = self.targetTitleRect;
+//            [self drawMaskLayer];
+//            [self.bodyCollectionView reloadData];
+//            [self.titleCollectionView selectItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndex inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+//            
+//        }
+//        else{
+//            CGFloat distancePerSecond = (self.distance)*displayLink.duration / 0.2;
+//            self.titleRect = CGRectMake(self.titleRect.origin.x+distancePerSecond, self.titleRect.origin.y, self.titleRect.size.width, self.titleRect.size.height);
+//            [self drawMaskLayer];
+//        }
+//    }
+//}
 
 
 @end
