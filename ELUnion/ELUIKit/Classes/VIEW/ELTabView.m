@@ -12,6 +12,36 @@
 
 #define countOfCellAtSingleLine 3
 
+
+@interface _ELBodyCell : UICollectionViewCell
+@property (nonatomic,strong)UILabel * titleLabel;
+@end
+
+@implementation _ELBodyCell
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor whiteColor];
+        self.titleLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+        self.titleLabel.textColor = UIColorFromRGB(0x656565);
+        self.titleLabel.font = ELTextSize22pt;
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addSubview:self.titleLabel];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[TITLE]-0-|" options:0 metrics:nil views:@{@"TITLE":self.titleLabel}]];
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[TITLE]-0-|" options:0 metrics:nil views:@{@"TITLE":self.titleLabel}]];
+        
+        
+    }
+    return self;
+}
+
+@end
+
+
 @interface _TitleFlowLayout : UICollectionViewFlowLayout
 @property (nonatomic,strong)NSMutableArray * attrArr;
 @property (nonatomic,assign)NSInteger itemCount;
@@ -158,7 +188,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        _selectIndex = -1;
         
         [self commonInit];
         
@@ -187,14 +217,17 @@
 }
 
 -(void)layoutSubviews{
-    
     [super layoutSubviews];
-    [self drawMaskLayer];
+    if (self.selectedIndex != -1) {
+        self.selectIndex = self.selectedIndex;
+    }
+    
+//    [self drawMaskLayer];
 }
 
-//- (void)drawRect:(CGRect)rect {
-//    
-//}
+- (void)drawRect:(CGRect)rect {
+    
+}
 
 - (void)drawMaskLayer{
     [self layoutIfNeeded];
@@ -246,7 +279,7 @@
     }
     else{
         NSString * title = self.bodyTitles[indexPath.row];
-        _ELTitleCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"titleCell" forIndexPath:indexPath];
+        _ELBodyCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"bodyCell" forIndexPath:indexPath];
         cell.titleLabel.text = title;
         return cell;
     }
@@ -257,18 +290,17 @@
     if (collectionView == self.titleCollectionView) {
         if (self.dataSource) {
             self.bodyTitles = self.dataSource(indexPath.row);
-//            [self.bodyCollectionView reloadData];
         }
-        
-        
         [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-        
-//        self.selectIndex = indexPath.row;
-        [self setSelectIndex:indexPath.row animated:YES];
+        [self setSelectIndex:indexPath.row animated:NO];
+        if (self.titleDelegate) {
+            self.titleDelegate(indexPath.row);
+        }
     }
     else{
         if (self.delegate) {
             self.delegate(self.selectIndex,indexPath.row);
+            [collectionView deselectItemAtIndexPath:indexPath animated:NO];
         }
     }
     
@@ -294,7 +326,8 @@
     if (!_bodyCollectionView) {
         _BodyFlowLayout * layout = [[_BodyFlowLayout alloc]init];
         _bodyCollectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
-        [_bodyCollectionView registerClass:[_ELTitleCell class] forCellWithReuseIdentifier:@"titleCell"];
+        [_bodyCollectionView registerClass:[_ELBodyCell class] forCellWithReuseIdentifier:@"bodyCell"];
+        
         _bodyCollectionView.backgroundColor = [UIColor whiteColor];
         _bodyCollectionView.delegate = self;
         _bodyCollectionView.dataSource = self;
@@ -317,8 +350,11 @@
         [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     }
     else{
+        if (self.dataSource) {
+            self.bodyTitles = self.dataSource(selectIndex);
+            [self.bodyCollectionView reloadData];
+        }
         self.titleRect = [(_TitleFlowLayout *)self.titleCollectionView.collectionViewLayout rectForItemAtIndexPath:[NSIndexPath indexPathForRow:selectIndex inSection:0]];
-//        [self setNeedsDisplay];
         [self drawMaskLayer];
         [self.titleCollectionView selectItemAtIndexPath:[NSIndexPath indexPathForRow:_selectIndex inSection:0] animated:NO scrollPosition:UICollectionViewScrollPositionNone];
     }
@@ -332,7 +368,6 @@
         if (self.targetTitleRect.origin.x <= self.titleRect.origin.x) {
             [displayLink invalidate];
             self.titleRect = self.targetTitleRect;
-//            [self setNeedsDisplay];
             [self drawMaskLayer];
             [self.bodyCollectionView reloadData];
             [self.titleCollectionView selectItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndex inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionNone];
@@ -340,8 +375,6 @@
         else{
             CGFloat distancePerSecond = (self.distance)*displayLink.duration / 0.2;
             self.titleRect = CGRectMake(self.titleRect.origin.x+distancePerSecond, self.titleRect.origin.y, self.titleRect.size.width, self.titleRect.size.height);
-            
-//            [self setNeedsDisplay];
             [self drawMaskLayer];
         }
     }
@@ -349,7 +382,6 @@
         if (self.targetTitleRect.origin.x >= self.titleRect.origin.x) {
             [displayLink invalidate];
             self.titleRect = self.targetTitleRect;
-//            [self setNeedsDisplay];
             [self drawMaskLayer];
             [self.bodyCollectionView reloadData];
             [self.titleCollectionView selectItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndex inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionNone];
@@ -358,30 +390,24 @@
         else{
             CGFloat distancePerSecond = (self.distance)*displayLink.duration / 0.2;
             self.titleRect = CGRectMake(self.titleRect.origin.x+distancePerSecond, self.titleRect.origin.y, self.titleRect.size.width, self.titleRect.size.height);
-//            [self setNeedsDisplay];
             [self drawMaskLayer];
         }
     }
-    
-    
-    
-    
-    
-    
 }
 
 -(void)setTabTitles:(NSArray<NSString *> *)tabTitles{
     _tabTitles = tabTitles;
-    [self.titleCollectionView reloadData];
-           
-    [self setSelectIndex:0 animated:NO];
-    
 }
+
+-(void)reloadData{
+    [self.titleCollectionView reloadData];
+}
+
 
 -(CAShapeLayer *)maskLayer{
     if (!_maskLayer) {
         _maskLayer = [CAShapeLayer layer];
-        _maskLayer.strokeColor = [UIColor colorWithRed:0.600 green:0.600 blue:0.600 alpha:1.00].CGColor;
+        _maskLayer.strokeColor = [UIColor colorWithRed:0.898 green:0.898 blue:0.898 alpha:1.00].CGColor;
         _maskLayer.fillColor   = [UIColor clearColor].CGColor;
         _maskLayer.lineWidth=1;
         _maskLayer.lineJoin=kCALineJoinRound;
