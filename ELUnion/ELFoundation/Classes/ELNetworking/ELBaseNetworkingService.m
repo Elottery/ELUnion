@@ -68,10 +68,14 @@ static ELBaseNetworkingService * _sharedService;
     
     NSURLSessionDataTask * dataTask = [self.sessionManager dataTaskWithRequest:request
                                                                 uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
-                                                                    uploadProgressBlock(uploadProgress);
+                                                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                                                        uploadProgressBlock(uploadProgress);
+                                                                    });
                                                                 }
                                                               downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
-                                                                  downloadProgressBlock(downloadProgress);
+                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                                      downloadProgressBlock(downloadProgress);
+                                                                  });
                                                               }
                                                              completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                                                                  

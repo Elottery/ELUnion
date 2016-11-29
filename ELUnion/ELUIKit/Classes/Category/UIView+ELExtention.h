@@ -11,6 +11,18 @@
 
 
 
+typedef NS_ENUM(NSUInteger, ELExtentsionLoadingState) {
+    ELExtentsionLoadingState_prepareLoading,
+    ELExtentsionLoadingState_loading,
+    ELExtentsionLoadingState_finishLoading,
+};
+
+typedef NS_ENUM(NSUInteger, ELExtentsionLoadingProgressStyle) {
+    ELExtentsionLoadingProgressStyle_circle,
+    ELExtentsionLoadingProgressStyle_square,
+};
+
+
 @interface UIView (ELExtention)
 @property (nonatomic,assign)CGFloat el_width;
 @property (nonatomic,assign)CGFloat el_height;
@@ -21,7 +33,14 @@
 @property (nonatomic,assign)CGFloat el_centerX;
 @property (nonatomic,assign)CGFloat el_centerY;
 @property (nonatomic,assign)CGSize  el_size;
-//@property (nonatomic,assign)CGSize  el_screenSize;
-//@property (nonatomic,assign,readonly)CGSize  el_screenWidth;
-//@property (nonatomic,assign,readonly)CGSize  el_screenHeight;
+
+
+
+#pragma -mark loading
+//@property (nonatomic,assign)ELExtentsionLoadingState loadingState;
+//@property (nonatomic,assign)ELExtentsionLoadingProgressStyle progressStyle;
+//@property (nonatomic,strong)UIColor * borderColor;
+//-(void)uploadProgress:(CGFloat)progress;
+
+
 @end

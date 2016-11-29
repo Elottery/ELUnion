@@ -41,17 +41,25 @@
         NSString * token = [[NSUserDefaults standardUserDefaults]objectForKey:ELBaseNetworkingService_JSESSIONID];
         return token;
     } didStart:^{
-        [weakSelf.delegate didStartLoadService:weakSelf];
-    } uploadProgress:^(NSProgress *progress) {
-        
-    } downloadProgress:^(NSProgress *progress) {
-        
-    } didFinish:^(id<ELResponseProtocol> response, NSError *error) {
-        if (error) {
-            [weakSelf.delegate service:weakSelf loadDataFailWithError:error];
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didStartLoadService:)]) {
+            [weakSelf.delegate didStartLoadService:weakSelf];
         }
-        else{
-            [weakSelf.delegate service:weakSelf loadDataSuccessWithResponse:response];
+    } uploadProgress:^(NSProgress *progress) {
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(service:loadState:andProgress:)]) {
+            [weakSelf.delegate service:weakSelf loadState:ELBaseServiceLoadingState_upload andProgress:progress.fractionCompleted];
+        }
+    } downloadProgress:^(NSProgress *progress) {
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(service:loadState:andProgress:)]) {
+            [weakSelf.delegate service:weakSelf loadState:ELBaseServiceLoadingState_download andProgress:progress.fractionCompleted];
+        }
+    } didFinish:^(id<ELResponseProtocol> response, NSError *error) {
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(service:loadDataFailWithError:)]) {
+            if (error) {
+                [weakSelf.delegate service:weakSelf loadDataFailWithError:error];
+            }
+            else{
+                [weakSelf.delegate service:weakSelf loadDataSuccessWithResponse:response];
+            }
         }
     }];
 }

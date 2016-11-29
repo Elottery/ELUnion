@@ -9,6 +9,10 @@
 #import "ELRequest.h"
 #import "ELResponse.h"
 
+typedef NS_ENUM(NSUInteger, ELBaseServiceLoadingState) {
+    ELBaseServiceLoadingState_upload,
+    ELBaseServiceLoadingState_download,
+};
 
 @class ELBaseService;
 
@@ -19,6 +23,18 @@
  *  @param service 请求服务
  */
 -(void)didStartLoadService:(ELBaseService *)service;
+
+/**
+ *  请求进度监控
+ *
+ *  @param service 请求服务
+ *  @param uploadingProgress    上传进度
+ *  @param downloadingProgress  下载进度
+ */
+-(void)service:(ELBaseService *)service
+     loadState:(ELBaseServiceLoadingState)state
+   andProgress:(double)progress;
+
 /**
  *  请求成功回调
  *

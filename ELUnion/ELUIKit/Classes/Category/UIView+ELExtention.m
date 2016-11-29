@@ -7,8 +7,107 @@
 //
 
 #import "UIView+ELExtention.h"
-
+#import <objc/runtime.h>
 @implementation UIView (ELExtention)
+
+
+//+(void)load{
+//    
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        Class class=[self class];
+//        //push方法替换
+//        SEL draworiginalSelector=@selector(drawRect:);
+//        SEL drawswizzledSelector=@selector(el_drawRect:);
+//        Method draworiginalMethod=class_getInstanceMethod(class,draworiginalSelector);
+//        Method drawswizzledMethod=class_getInstanceMethod(class,drawswizzledSelector);
+//        
+//        if(class_addMethod(class,
+//                           draworiginalSelector,
+//                           method_getImplementation(drawswizzledMethod),
+//                           method_getTypeEncoding(drawswizzledMethod))){
+//            
+//            class_replaceMethod(class,drawswizzledSelector,method_getImplementation(draworiginalMethod),method_getTypeEncoding(draworiginalMethod));
+//        }else{
+//            method_exchangeImplementations(draworiginalMethod,drawswizzledMethod);
+//        }
+//    });
+//}
+//
+//
+//-(void)setProgress:(CGFloat)progress{
+//    objc_setAssociatedObject(self, @selector(progress), @(progress), OBJC_ASSOCIATION_COPY_NONATOMIC);
+//}
+//
+//-(CGFloat)progress{
+//    return  [objc_getAssociatedObject(self, _cmd) floatValue];
+//}
+//
+//-(void)setProgressStyle:(ELExtentsionLoadingProgressStyle)progressStyle{
+//    objc_setAssociatedObject(self, @selector(progressStyle), @(progressStyle), OBJC_ASSOCIATION_COPY_NONATOMIC);
+//    [self setNeedsDisplay];
+//}
+//
+//-(ELExtentsionLoadingProgressStyle)progressStyle{
+//    return  [objc_getAssociatedObject(self, _cmd) floatValue];
+//}
+//
+//
+//-(CAShapeLayer *)progressLayer{
+//    CAShapeLayer * layer = objc_getAssociatedObject(self, _cmd);
+//    if (!layer) {
+//        layer = [CAShapeLayer layer];
+//        
+//        objc_setAssociatedObject(self, _cmd, layer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//        [self.layer addSublayer:layer];
+//    }
+//    return layer;
+//}
+
+
+
+//-(void)el_drawRect:(CGRect)rect{
+//    [self el_drawRect:rect];
+//    
+//    [self progressLayer].frame = CGRectMake(0, 0, rect.size.width, rect.size.height);
+//    
+//    switch (self.progressStyle) {
+//        case ELExtentsionLoadingProgressStyle_circle:
+//        {
+//            
+//        }
+//            break;
+//        case ELExtentsionLoadingProgressStyle_square:
+//        {
+//            UIBezierPath * path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, rect.size.width, rect.size.height)];
+//            [self progressLayer].lineWidth = 2;
+//            [self progressLayer].path = path.CGPath;
+//            [self progressLayer].fillColor = [UIColor blackColor].CGColor;
+//            [self progressLayer].strokeStart = 0;
+//            [self progressLayer].strokeEnd   = [self progress];
+//        }
+//            break;
+//        default:
+//            break;
+//    }
+//    
+//    
+//    
+//    
+//    
+//    
+//}
+
+
+
+
+//-(void)uploadProgress:(CGFloat)progress{
+//    [self setProgress:progress];
+//    [self setNeedsDisplay];
+//}
+
+
+
 -(void)setEl_width:(CGFloat)el_width{
     CGRect selfBounds = self.bounds;
     selfBounds.size.width = el_width;
