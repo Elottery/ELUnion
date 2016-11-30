@@ -24,6 +24,8 @@ typedef void(^ELActionSheetCancelBlock)();
 
 -(void)showInView:(UIView *)view;
 
+-(void)dismissActionSheet;
+
 -(void)show;
 
 @end

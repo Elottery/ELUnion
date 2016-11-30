@@ -9,6 +9,8 @@
 #import "PushPopTest1ViewController.h"
 #import "PushPopTest2ViewController.h"
 #import <ELUnion/ELTransitionAnimationType.h>
+#import <ELUnion/UIView+ELExtention.h>
+#import <ELUnion/ELLoadingBase.h>
 @interface PushPopTest1ViewController ()<ELTransitionProtocol>
 
 @end
@@ -25,6 +27,23 @@
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(pushVC) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
+    ELLoadingBase * imageView = [[ELLoadingBase alloc]initWithFrame:CGRectMake(100, 200, 100, 100)];
+    imageView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:imageView];
+    
+    
+    NSTimer * t = [NSTimer scheduledTimerWithTimeInterval:1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        if (imageView.progress>=1) {
+            [timer invalidate];
+        }
+        else{
+            imageView.progress += 0.1;
+        }
+    }];
+    
+    
+    
+    
     
     
     

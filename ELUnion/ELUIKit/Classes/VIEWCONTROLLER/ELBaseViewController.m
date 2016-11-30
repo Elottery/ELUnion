@@ -58,8 +58,9 @@
     
     
     
-    if (self.parentViewController == self.navigationController) {
+    if (self.parentViewController == self.navigationController && self.parentViewController != nil) {
         [self.view addSubview:self.el_navigationBar];
+        self.el_navigationBar.backBtnType = [self backBtnType];
         _navigationBarTopConstraint = [NSLayoutConstraint constraintWithItem:_el_navigationBar
                                                                    attribute:NSLayoutAttributeTop
                                                                    relatedBy:NSLayoutRelationEqual
@@ -67,8 +68,7 @@
                                                                    attribute:NSLayoutAttributeTop
                                                                   multiplier:1
                                                                     constant:0];
-        
-        
+
         _navigationBarHeightConstraint = [NSLayoutConstraint constraintWithItem:_el_navigationBar
                                                                       attribute:NSLayoutAttributeHeight
                                                                       relatedBy:NSLayoutRelationEqual
@@ -179,16 +179,12 @@
 
 -(void)willMoveToParentViewController:(UIViewController *)parent{
     [super willMoveToParentViewController:parent];
-    
-    
-    
 }
 
 -(void)didMoveToParentViewController:(UIViewController *)parent{
     [super didMoveToParentViewController:parent];
 //    self.el_navigationBar.backBtnType = self.backBtnType;
 }
-
 
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
@@ -211,6 +207,11 @@
 -(ELViewControllerTransitionAnimationType)dismissedTransitionType{
     return  ELViewControllerTransitionAnimationTypeFromTopToBottom;
 }
+
+-(ELNavigationBar_BackBtn_type)backBtnType{
+    return ELNavigationBar_BackBtn_type_ARROW;
+}
+
 -(BOOL)canDragBackWithPan:(UIPanGestureRecognizer *)panGesture{
     return YES;
 }

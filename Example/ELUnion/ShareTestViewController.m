@@ -10,6 +10,7 @@
 #import <ELUnion/ELShareViewController.h>
 #import <ELUnion/UIView+HUD.h>
 #import <ELUnion/UIViewController+ELTransition.h>
+#import <ELUnion/ELActionSheetViewController.h>
 @interface ShareTestViewController ()<ELTransitionProtocol>
 
 @end
@@ -24,6 +25,30 @@
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
+    
+    
+    
+    
+    UIButton * btn2 = [[UIButton alloc]initWithFrame:CGRectMake(100, 160, 100, 44)];
+    [btn2 setTitle:@"show" forState:UIControlStateNormal];
+    [btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn2 addTarget:self action:@selector(btn2Click) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn2];
+    
+    
+}
+
+
+-(void)btn2Click{
+    ELActionSheetViewController * controller = [[ELActionSheetViewController alloc]initWithTitles:@[@"title1",@"title2",@"title3"] didClick:^{
+        
+    } cancel:^{
+        
+    }];
+    
+    [self el_presentViewController:controller withAnimationType:ELViewControllerTransitionAnimationTypeNoneAnimation animationComplete:^{
+        
+    }];
 }
 
 -(void)btnClick{

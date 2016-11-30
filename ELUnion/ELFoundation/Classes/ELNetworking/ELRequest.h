@@ -44,6 +44,11 @@
 
 - (NSString *)toJSONString;
 
+- (BOOL)isFileData;
+
+- (NSData *)fileData;
+
+
 @end
 
 @interface ELRequest : JSONModel<ELRequestProtocol>

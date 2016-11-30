@@ -68,10 +68,14 @@ static ELBaseNetworkingService * _sharedService;
     
     NSURLSessionDataTask * dataTask = [self.sessionManager dataTaskWithRequest:request
                                                                 uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
-                                                                    uploadProgressBlock(uploadProgress);
+                                                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                                                        uploadProgressBlock(uploadProgress);
+                                                                    });
                                                                 }
                                                               downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
-                                                                  downloadProgressBlock(downloadProgress);
+                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                                      downloadProgressBlock(downloadProgress);
+                                                                  });
                                                               }
                                                              completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                                                                  
@@ -101,8 +105,15 @@ static ELBaseNetworkingService * _sharedService;
 
 
 -(NSURLRequest *)URLRequestWithRequest:(id<ELRequestProtocol>)request andToken:(NSString *)token{
-//    id<ELRequestProtocol> requestObj = request;
-    NSData  * requestData = [[request toJSONString] dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSData  * requestData = nil;
+    if ([request respondsToSelector:@selector(isFileData)]&&[request isFileData]) {
+        requestData = [request fileData];
+    }
+    else{
+        requestData = [[request toJSONString] dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    
     //组装请求
     NSMutableURLRequest * URLRequest = nil;
     NSString * URLStr = [NSString stringWithFormat:@"%@",self.defaultConfig.HOST];

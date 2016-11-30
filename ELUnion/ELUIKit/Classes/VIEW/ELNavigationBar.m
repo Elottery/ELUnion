@@ -53,9 +53,6 @@
         [self addSubview:_titleView];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:_titleView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:-10]];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:_titleView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-        
-        
-        
     }
     return _titleView;
 }
@@ -74,8 +71,8 @@
             break;
         case ELNavigationBar_BackBtn_type_ARROW:
             _backBtn.hidden = NO;
-            [_backBtn setImage:[ELBundleHelper el_imageNamed:@"Arrow-left-white"] forState:UIControlStateNormal];
-            [_backBtn setImage:[ELBundleHelper el_imageNamed:@"Arrow-left-white"] forState:UIControlStateHighlighted];
+            [_backBtn setImage:[ELBundleHelper el_imageNamed:@"Arrow-left-white@2x"] forState:UIControlStateNormal];
+            [_backBtn setImage:[ELBundleHelper el_imageNamed:@"Arrow-left-white@2x"] forState:UIControlStateHighlighted];
             break;
         default:
             break;

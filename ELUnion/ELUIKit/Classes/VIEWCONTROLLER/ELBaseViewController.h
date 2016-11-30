@@ -21,8 +21,6 @@
  */
 @property (nonatomic,strong,readonly)ELNavigationBar * el_navigationBar;
 
-//@property (nonatomic,strong,readonly)UIView          * el_mainView;
-
 @property (nonatomic,assign)BOOL el_tabbarHiddenWhenPushed;
 
 @property (nonatomic,weak,readonly)ELTabbar          * el_tabbar;
@@ -30,7 +28,6 @@
 @property (nonatomic,weak,readonly)ELBaseTabbarController * el_tabbarController;
 
 - (void)el_setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated;
-
 
 -(void)backBtnDidClick;
 
@@ -45,7 +42,7 @@
  */
 -(void)setUpView;
 
-
+-(ELNavigationBar_BackBtn_type)backBtnType;
 
 @end
 
@@ -62,7 +59,5 @@
 @property (nonatomic,weak,readonly)ELBaseTabbarController * el_tabbarController;
 
 - (void)backBtnClick;
-
-- (void)el_setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated;
 
 @end

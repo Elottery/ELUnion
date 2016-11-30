@@ -13,6 +13,7 @@ typedef NSArray<NSString *> *(^ELTabViewReturnBlock)(NSUInteger titleIndex);
 
 typedef void(^ELTabViewClickBlock)(NSUInteger titleIndex,NSUInteger bodyIndex);
 
+typedef void(^ELTabViewTitleClickBlock)(NSUInteger titleIndex);
 
 @interface ELTabView : UIView
 
@@ -22,10 +23,14 @@ typedef void(^ELTabViewClickBlock)(NSUInteger titleIndex,NSUInteger bodyIndex);
 
 @property (nonatomic,copy)ELTabViewClickBlock  delegate;
 
+@property (nonatomic,copy)ELTabViewTitleClickBlock  titleDelegate;
+
 @property (nonatomic,assign,getter=selectedIndex)NSInteger selectIndex;
 
 @property (nonatomic,strong)NSArray<NSString *> * tabTitles;
 
 @property (nonatomic,strong)NSArray<NSString *> * bodyTitles;
+
+//-(void)reloadData;
 
 @end

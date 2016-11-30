@@ -12,7 +12,7 @@
 +(instancetype)defautItem{
     ELTabbarItem * item = [[self alloc]init];
     item.title = @"item";
-    item.titleFont = [UIFont systemFontOfSize:12];
+    item.titleFont = [UIFont systemFontOfSize:11];
     item.titleColor= [UIColor colorWithRed:0.396 green:0.396 blue:0.396 alpha:1.00];
     item.selectedTitleColor = [UIColor colorWithRed:0.910 green:0.129 blue:0.094 alpha:1.00];
     item.badgeBackgroundColor = [UIColor colorWithRed:0.910 green:0.129 blue:0.094 alpha:1.00];
