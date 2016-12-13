@@ -42,6 +42,7 @@
     [self.HUD showAnimated:YES];
     self.HUD.mode = MBProgressHUDModeText;
     self.HUD.label.text = text;
+    self.HUD.label.numberOfLines = 0;
     self.HUD.label.font = ELTextSize04;
     [self.HUD hideAnimated:YES afterDelay:2];
 }
