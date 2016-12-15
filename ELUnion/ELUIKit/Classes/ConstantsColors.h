@@ -18,7 +18,7 @@
 #define ELColor06 UIColorFromRGB(0xfee158) //黄
 #define ELColor07 UIColorFromRGB(0x1fca26) //绿
 #define ELColor08 UIColorFromRGB(0xfd8961) //橙
-
+#define ELColor09 UIColorFromRGB(0x333333) //灰
 
 
 #define ELTextSize01 [UIFont systemFontOfSize:20]

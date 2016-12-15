@@ -40,12 +40,16 @@
 
 
 -(void)btn2Click{
-    ELActionSheetViewController * controller = [[ELActionSheetViewController alloc]initWithTitles:@[@"title1",@"title2",@"title3"] didClick:^{
+//    ELActionSheetViewController * controller = [[ELActionSheetViewController alloc]initWithTitles:@[@"title1",@"title2",@"title3"] didClick:^{
+//        
+//    } cancel:^{
+//        
+//    }];
+    ELActionSheetViewController * controller = [[ELActionSheetViewController alloc]initWithTitles:@[@"title1",@"title2",@"title3"] didClick:^(NSInteger index) {
         
     } cancel:^{
         
     }];
-    
     [self el_presentViewController:controller withAnimationType:ELViewControllerTransitionAnimationTypeNoneAnimation animationComplete:^{
         
     }];
