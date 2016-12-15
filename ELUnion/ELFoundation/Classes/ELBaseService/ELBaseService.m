@@ -58,6 +58,8 @@
                 [weakSelf.delegate service:weakSelf loadDataFailWithError:error];
             }
             else{
+                [[NSUserDefaults standardUserDefaults]setObject:[response header].sid forKey:ELBaseNetworkingService_JSESSIONID];
+                [[NSUserDefaults standardUserDefaults]synchronize];
                 [weakSelf.delegate service:weakSelf loadDataSuccessWithResponse:response];
             }
         }

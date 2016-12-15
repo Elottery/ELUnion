@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, ELBaseServiceLoadingState) {
 @class ELBaseService;
 
 @protocol ELBaseServiceDelegate <NSObject>
+@optional
 /**
  *  数据请求开始
  *

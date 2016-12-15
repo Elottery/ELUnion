@@ -171,21 +171,12 @@
 
 -(void)finishInteractiveTransition{
     self.interactive = NO;
-//    CFTimeInterval pausedTime = self.privateContainerView.layer.timeOffset;
-//    self.privateContainerView.layer.speed = 1.0;
-//    self.privateContainerView.layer.timeOffset = 0.0;
-//    self.privateContainerView.layer.beginTime = 0.0;
-//    CFTimeInterval timeSincePause = [self.privateContainerView.layer convertTime:CACurrentMediaTime() fromLayer:nil]-pausedTime;
-//    self.privateContainerView.layer.beginTime = timeSincePause;
-    
     CADisplayLink * displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(finishCurrentAnimation:)];
     [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 
     
     CFTimeInterval interval = (1-self.transitionPercent) * self.transitionDuration;
     [self performSelector:@selector(fixBeginTimeBug) withObject:nil afterDelay:interval];
-    
-    
 }
 
 -(void)cancelInteractiveTransition{
@@ -225,18 +216,10 @@
         [displayLink invalidate];
         self.privateContainerView.layer.timeOffset = 0;//self.transitionDuration;
         self.privateContainerView.layer.speed   = 1;
-        
-//        UIView * fakeFromView = [self.privateFromViewController.view snapshotViewAfterScreenUpdates:NO];
-//        [self.privateContainerView addSubview:fakeFromView];
-//        [self performSelector:@selector(removeFakeFromView:) withObject:fakeFromView afterDelay:1/60];
-//        [self.privateContainerViewController contextDidFinishTransition:YES];
     }
 
 }
 
-//-(void)removeFakeFromView:(UIView *)view{
-//    [view removeFromSuperview];
-//}
 
 -(void)fixBeginTimeBug{
     self.privateContainerView.layer.beginTime = 0.0;
