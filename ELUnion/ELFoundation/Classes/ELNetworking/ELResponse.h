@@ -9,6 +9,9 @@
 #import <JSONModel/JSONModel.h>
 #import "ELConstant.h"
 #import "ELModel.h"
+
+@class ELResponseHeader;
+
 @protocol ELResponseProtocol <NSObject>
 
 @property (nonatomic,copy)NSString * protocolId;
@@ -27,6 +30,8 @@
 - (NSString *)decryptKey;
 
 - (NSString *)toJSONString;
+
+- (ELResponseHeader *)header;
 
 @end
 
