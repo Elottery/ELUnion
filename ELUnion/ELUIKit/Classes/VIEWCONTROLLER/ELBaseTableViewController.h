@@ -20,6 +20,8 @@
 
 @property (nonatomic,assign,readonly)NSUInteger currentPage;
 
+@property (nonatomic,assign,readonly)NSInteger loadingPageIndex;
+
 @property (nonatomic,assign)NSInteger  startPage;//第一页的页码，默认为1
 
 @property (nonatomic,assign)NSUInteger pageSize;
@@ -29,7 +31,7 @@
 @property (nonatomic,assign)BOOL  hasFooter;
 
 -(void)refreshDataAnimated:(BOOL)animated;
--(void)endRefreshAndReloadTableView:(BOOL)reload;
+//-(void)endRefreshAndReloadTableView:(BOOL)reload;
 -(void)endRefreshHeaderAndReloadTableView:(BOOL)reload;
 -(void)endRefreshFooterAndReloadTableView:(BOOL)reload;//默认page增加1
 -(void)endRefreshFooterAndReloadTableView:(BOOL)reload updatePageCounting:(BOOL)update;

@@ -15,13 +15,15 @@
 
 @property (nonatomic,strong,readonly)NSManagedObjectContext  * context;
 
+@property (nonatomic,strong)NSManagedObjectContext  * backgroundContext;
+
 -(instancetype)initWithDBFilePath:(NSURL *)filePath;
 
 -(instancetype)initWithDBFilePath:(NSURL *)filePath
                         andModels:(NSArray<NSManagedObjectModel *> *)models;
-/**
- *  进入后台时会自动调用。
- */
+
 -(void)saveContext;
+
+-(void)asyncSaveContext;
 
 @end

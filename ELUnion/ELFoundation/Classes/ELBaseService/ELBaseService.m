@@ -7,7 +7,7 @@
 //
 
 #import "ELBaseService.h"
-#import "ELBaseNetworkingService.h"
+
 #import "APPInfo.h"
 @implementation ELBaseService
 {
@@ -58,8 +58,8 @@
                 [weakSelf.delegate service:weakSelf loadDataFailWithError:error];
             }
             else{
-                [[NSUserDefaults standardUserDefaults]setObject:[response header].sid forKey:ELBaseNetworkingService_JSESSIONID];
-                [[NSUserDefaults standardUserDefaults]synchronize];
+//                [[NSUserDefaults standardUserDefaults]setObject:[response header].sid forKey:ELBaseNetworkingService_JSESSIONID];
+//                [[NSUserDefaults standardUserDefaults]synchronize];
                 [weakSelf.delegate service:weakSelf loadDataSuccessWithResponse:response];
             }
         }

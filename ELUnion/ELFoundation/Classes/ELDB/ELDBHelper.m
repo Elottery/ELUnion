@@ -12,6 +12,7 @@
 {
     NSManagedObjectContext * _context;
 }
+
 @property (nonatomic,strong)NSPersistentStoreCoordinator * coordinator;
 @property (nonatomic,strong)NSManagedObjectModel         * model;
 @property (nonatomic,strong)NSPersistentStore            * store;
@@ -66,7 +67,19 @@
     }
 }
 
-
+-(void)asyncSaveContext{
+    if ([self.backgroundContext hasChanges]) {
+        [self.backgroundContext performBlock:^{
+            NSError * error = nil;
+            if (![self.backgroundContext save:&error]) {
+                NSLog(@"background 保存失败%@",error);
+            }
+            else{
+                [self.context save:nil];
+            }
+        }];
+    }
+}
 
 -(NSManagedObjectModel *)model{
     if (!_model) {
@@ -96,6 +109,13 @@
         
     }
     return _context;
+}
+-(NSManagedObjectContext *)backgroundContext{
+    if (!_backgroundContext) {
+        _backgroundContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        _backgroundContext.parentContext = self.context;
+    }
+    return _backgroundContext;
 }
 
 @end

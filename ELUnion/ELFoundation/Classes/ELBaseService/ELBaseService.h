@@ -8,6 +8,7 @@
 
 #import "ELRequest.h"
 #import "ELResponse.h"
+#import "ELBaseNetworkingService.h"
 
 typedef NS_ENUM(NSUInteger, ELBaseServiceLoadingState) {
     ELBaseServiceLoadingState_upload,

@@ -49,7 +49,9 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.el_tabbarController el_setTabbarHidden:self.el_tabbarHiddenWhenPushed animated:YES];
+    if (self.parentViewController == self.navigationController && self.parentViewController != nil) {
+        [self.el_tabbarController el_setTabbarHidden:self.el_tabbarHiddenWhenPushed animated:YES];
+    }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

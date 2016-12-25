@@ -10,7 +10,7 @@
 #import "MJRefresh.h"
 
 @interface ELBaseTableViewController ()
-@property (nonatomic,assign)NSInteger nextPage;
+
 
 
 
@@ -23,7 +23,8 @@
     self = [super init];
     if (self) {
         _currentPage = 1;
-        _nextPage    = 1;
+        _loadingPageIndex    = 1;
+        _startPage   = 1;
         _pageSize    = 15;
         _hasFooter = YES;
         _hasHeader = YES;
@@ -144,13 +145,14 @@
 
 
 -(void)headerRefresh{
-    _currentPage =  1;
-    self.nextPage = 1;
-    [self loadDataAtPageIndex:self.nextPage withPageSize:_pageSize];
+    _currentPage      =  self.startPage;
+    _loadingPageIndex =  self.startPage;
+    [self loadDataAtPageIndex:_currentPage withPageSize:_pageSize];
 }
 
 -(void)footerRefresh{
-    [self loadDataAtPageIndex:self.nextPage withPageSize:_pageSize];
+    _loadingPageIndex++;
+    [self loadDataAtPageIndex:_loadingPageIndex withPageSize:_pageSize];
 }
 
 -(void)loadDataAtPageIndex:(NSUInteger)pageIndex withPageSize:(NSUInteger)pageSize{
@@ -170,10 +172,10 @@
 
 
 
--(void)endRefreshAndReloadTableView:(BOOL)reload{
-    [self endRefreshHeaderAndReloadTableView:reload];
-    [self endRefreshFooterAndReloadTableView:reload];
-}
+//-(void)endRefreshAndReloadTableView:(BOOL)reload{
+//    [self endRefreshHeaderAndReloadTableView:reload];
+//    [self endRefreshFooterAndReloadTableView:reload];
+//}
 -(void)endRefreshHeaderAndReloadTableView:(BOOL)reload{
     [self.tableView.mj_header endRefreshing];
     if (reload) {
@@ -185,15 +187,17 @@
     [self endRefreshFooterAndReloadTableView:reload updatePageCounting:YES];
 }
 -(void)endRefreshFooterAndReloadTableView:(BOOL)reload updatePageCounting:(BOOL)update{
-    _currentPage = self.nextPage;
     if (update) {
-        self.nextPage ++;
+        _currentPage = self.loadingPageIndex;
+    }
+    else{
+        _loadingPageIndex = _currentPage;
     }
     
-    [self.tableView.mj_footer endRefreshing];
     if (reload) {
         [self.tableView reloadData];
     }
+    [self.tableView.mj_footer endRefreshing];
 }
 
 
