@@ -23,10 +23,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = UIColorFromRGB(0xf2f2f2);
         self.titleLabel = [[UILabel alloc]initWithFrame:CGRectZero];
         self.titleLabel.textColor = UIColorFromRGB(0x656565);
-        self.titleLabel.font = ELTextSize22pt;
+        self.titleLabel.font = ELTextSize04;
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:self.titleLabel];
@@ -38,6 +38,25 @@
     }
     return self;
 }
+
+-(void)setSelected:(BOOL)selected{
+    if (selected) {
+        self.backgroundColor = UIColorFromRGB(0xdedede);
+    }
+    else{
+        self.backgroundColor = UIColorFromRGB(0xf2f2f2);
+    }
+}
+
+-(void)setHighlighted:(BOOL)highlighted{
+    if (highlighted) {
+        self.backgroundColor = UIColorFromRGB(0xdedede);
+    }
+    else{
+        self.backgroundColor = UIColorFromRGB(0xf2f2f2);
+    }
+}
+
 
 @end
 
@@ -138,6 +157,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
         self.titleLabel = [[UILabel alloc]initWithFrame:self.bounds];
         self.titleLabel.textColor = UIColorFromRGB(0x656565);
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -159,9 +179,11 @@
 -(void)setSelected:(BOOL)selected{
     if (selected) {
         self.titleLabel.textColor = ELColor01;
+        self.backgroundColor = UIColorFromRGB(0xf2f2f2);
     }
     else{
         self.titleLabel.textColor = UIColorFromRGB(0x656565);
+        self.backgroundColor = UIColorFromRGB(0xffffff);
     }
 }
 
@@ -224,35 +246,35 @@
 //    }
 }
 
-- (void)drawRect:(CGRect)rect {
-    [self drawMaskLayer:rect];
-}
+//- (void)drawRect:(CGRect)rect {
+//    [self drawMaskLayer:rect];
+//}
 
-- (void)drawMaskLayer:(CGRect)rect{
-    [self layoutIfNeeded];
+//- (void)drawMaskLayer:(CGRect)rect{
+//    [self layoutIfNeeded];
 //    if (!CGRectIsEmpty(self.titleRect)) {
-        self.titleRect = [(_TitleFlowLayout *)self.titleCollectionView.collectionViewLayout rectForItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndex inSection:0]];
-//        CGRect rect = self.bounds;
-        CGMutablePathRef linePath =nil;
-        
-        linePath =CGPathCreateMutable();
-        
-        
-        CGPathMoveToPoint(linePath,NULL, self.titleRect.origin.x, self.titleRect.size.height);//设置起点
-        CGPathAddLineToPoint(linePath,NULL, self.titleRect.origin.x, self.titleRect.origin.y);
-        CGPathAddLineToPoint(linePath,NULL, self.titleRect.origin.x +self.titleRect.size.width, self.titleRect.origin.y);
-        
-        CGPathAddLineToPoint(linePath,NULL, self.titleRect.origin.x +self.titleRect.size.width, self.titleRect.size.height);
-        CGPathAddLineToPoint(linePath,NULL, rect.size.width, self.titleRect.size.height);
-        CGPathAddLineToPoint(linePath,NULL, rect.size.width, rect.size.height);
-        CGPathAddLineToPoint(linePath,NULL, 0, rect.size.height);
-        CGPathAddLineToPoint(linePath,NULL, 0, self.titleRect.size.height);
-        CGPathAddLineToPoint(linePath,NULL, self.titleRect.origin.x, self.titleRect.size.height);
-        self.maskLayer.frame = rect;
-        self.maskLayer.path = linePath;
-        CGPathRelease(linePath);
+//        self.titleRect = [(_TitleFlowLayout *)self.titleCollectionView.collectionViewLayout rectForItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndex inSection:0]];
+////        CGRect rect = self.bounds;
+//        CGMutablePathRef linePath =nil;
+//        
+//        linePath =CGPathCreateMutable();
+//        
+//        
+//        CGPathMoveToPoint(linePath,NULL, self.titleRect.origin.x, self.titleRect.size.height);//设置起点
+//        CGPathAddLineToPoint(linePath,NULL, self.titleRect.origin.x, self.titleRect.origin.y);
+//        CGPathAddLineToPoint(linePath,NULL, self.titleRect.origin.x +self.titleRect.size.width, self.titleRect.origin.y);
+//        
+//        CGPathAddLineToPoint(linePath,NULL, self.titleRect.origin.x +self.titleRect.size.width, self.titleRect.size.height);
+//        CGPathAddLineToPoint(linePath,NULL, rect.size.width, self.titleRect.size.height);
+//        CGPathAddLineToPoint(linePath,NULL, rect.size.width, rect.size.height);
+//        CGPathAddLineToPoint(linePath,NULL, 0, rect.size.height);
+//        CGPathAddLineToPoint(linePath,NULL, 0, self.titleRect.size.height);
+//        CGPathAddLineToPoint(linePath,NULL, self.titleRect.origin.x, self.titleRect.size.height);
+//        self.maskLayer.frame = rect;
+//        self.maskLayer.path = linePath;
+//        CGPathRelease(linePath);
 //    }
-}
+//}
 
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -275,6 +297,12 @@
         
         _ELTitleCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"titleCell" forIndexPath:indexPath];
         cell.titleLabel.text = title;
+        if (indexPath.row == self.selectedIndex) {
+            cell.selected = YES;
+        }
+        else{
+            cell.selected = NO;
+        }
         return cell;
     }
     else{
@@ -291,9 +319,6 @@
         if (self.dataSource) {
             self.bodyTitles = self.dataSource(indexPath.row);
         }
-        [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-//        [self setSelectIndex:indexPath.row animated:NO];
-        [self setNeedsDisplay];
         if (self.titleDelegate) {
             self.titleDelegate(indexPath.row);
         }
@@ -301,7 +326,7 @@
     else{
         if (self.delegate) {
             self.delegate(self.selectIndex,indexPath.row);
-            [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+            [collectionView deselectItemAtIndexPath:indexPath animated:YES];
         }
     }
     
@@ -319,6 +344,7 @@
         _titleCollectionView.dataSource = self;
         _titleCollectionView.showsVerticalScrollIndicator = NO;
         _titleCollectionView.showsHorizontalScrollIndicator = NO;
+        _titleCollectionView.allowsMultipleSelection = NO;
     }
     return _titleCollectionView;
 }
@@ -329,9 +355,10 @@
         _bodyCollectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
         [_bodyCollectionView registerClass:[_ELBodyCell class] forCellWithReuseIdentifier:@"bodyCell"];
         
-        _bodyCollectionView.backgroundColor = [UIColor whiteColor];
+        _bodyCollectionView.backgroundColor = UIColorFromRGB(0xf2f2f2);
         _bodyCollectionView.delegate = self;
         _bodyCollectionView.dataSource = self;
+        _bodyCollectionView.allowsMultipleSelection = NO;
     }
     return _bodyCollectionView;
 }

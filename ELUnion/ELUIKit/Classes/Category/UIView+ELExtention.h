@@ -35,6 +35,12 @@ typedef NS_ENUM(NSUInteger, ELExtentsionLoadingProgressStyle) {
 @property (nonatomic,assign)CGSize  el_size;
 
 
+@property (nonatomic,assign)BOOL bottomLine;
+@property (nonatomic,assign)BOOL rightLine;
+@property (nonatomic,assign)BOOL leftLine;
+@property (nonatomic,assign)BOOL topLine;
+
+
 
 #pragma -mark loading
 //@property (nonatomic,assign)ELExtentsionLoadingState loadingState;

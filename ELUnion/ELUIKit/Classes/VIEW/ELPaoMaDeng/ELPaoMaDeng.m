@@ -21,6 +21,7 @@
     if (self) {
         self.label = [[UILabel alloc]initWithFrame:frame];
         self.label.font = [UIFont systemFontOfSize:10];
+//        self.label.textColor = [UIColor blackColor];
         self.label.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:self.label];
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[label]-0-|" options:0 metrics:nil views:@{@"label":self.label}]];
@@ -78,8 +79,8 @@
 
 -(void)reloadData{
     self.index = 0;
-    [self.rowView_1 removeFromSuperview];
-    [self.rowView_2 removeFromSuperview];
+//    [self.rowView_1 removeFromSuperview];
+//    [self.rowView_2 removeFromSuperview];
 
     if (_timer) {
         [_timer invalidate];

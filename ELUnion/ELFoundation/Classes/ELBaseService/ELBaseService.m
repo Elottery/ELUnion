@@ -18,6 +18,7 @@
 {
     self = [super init];
     if (self) {
+        self.serviceState = ELBaseServiceHolding;
         _netWorkService =  [ELBaseNetworkingService sharedService];
         ELBaseNetworkingServiceConfiguration * conf = [[ELBaseNetworkingServiceConfiguration alloc]init];
         conf.HOST = [APPInfo APIHOST];
@@ -41,6 +42,7 @@
         NSString * token = [[NSUserDefaults standardUserDefaults]objectForKey:ELBaseNetworkingService_JSESSIONID];
         return token;
     } didStart:^{
+        weakSelf.serviceState = ELBaseServiceLoading;
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didStartLoadService:)]) {
             [weakSelf.delegate didStartLoadService:weakSelf];
         }
@@ -53,6 +55,7 @@
             [weakSelf.delegate service:weakSelf loadState:ELBaseServiceLoadingState_download andProgress:progress.fractionCompleted];
         }
     } didFinish:^(id<ELResponseProtocol> response, NSError *error) {
+        weakSelf.serviceState = ELBaseServiceHolding;
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(service:loadDataFailWithError:)]) {
             if (error) {
                 [weakSelf.delegate service:weakSelf loadDataFailWithError:error];

@@ -15,6 +15,13 @@ typedef NS_ENUM(NSUInteger, ELBaseServiceLoadingState) {
     ELBaseServiceLoadingState_download,
 };
 
+
+typedef NS_ENUM(NSUInteger, ELBaseServiceState) {
+    ELBaseServiceHolding,//等待请求
+    ELBaseServiceLoading,//正在请求
+};
+
+
 @class ELBaseService;
 
 @protocol ELBaseServiceDelegate <NSObject>
@@ -58,6 +65,8 @@ typedef NS_ENUM(NSUInteger, ELBaseServiceLoadingState) {
 
 
 @interface ELBaseService : NSObject
+
+@property (nonatomic,assign)ELBaseServiceState serviceState;
 
 @property (nonatomic,weak)id<ELBaseServiceDelegate> delegate;
 
