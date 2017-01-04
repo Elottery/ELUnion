@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, ELViewControllerTransitionAnimationType) {
 -(ELViewControllerTransitionAnimationType)presentedTransitionType;
 -(ELViewControllerTransitionAnimationType)dismissedTransitionType;
 
--(BOOL)canDragBackWithPan:(UIPanGestureRecognizer *)panGesture;
+-(BOOL)canDragBackWithPan:(UIPanGestureRecognizer *)panGesture withTouch:(UITouch *)touch;
 
 @end
 

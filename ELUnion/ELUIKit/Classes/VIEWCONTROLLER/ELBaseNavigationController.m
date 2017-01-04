@@ -68,29 +68,5 @@
 }
 
 
-//-(void)el_pushViewController:(UIViewController *)viewController animationType:(ELViewControllerTransitionAnimationType)type{
-//    [self pushViewController:viewController animated:YES];
-//    
-//}
-//
-//-(UIViewController *)el_popViewControllerWithAnimationType:(ELViewControllerTransitionAnimationType)type{
-//    [self popViewControllerAnimated:YES];
-//}
-//
-//-(NSArray<UIViewController *> *)el_popToViewController:(UIViewController *)viewController animationType:(ELViewControllerTransitionAnimationType)type{
-//    [self popToViewController:viewController animated:YES];
-//}
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

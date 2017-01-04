@@ -214,8 +214,4 @@
     return ELNavigationBar_BackBtn_type_ARROW;
 }
 
--(BOOL)canDragBackWithPan:(UIPanGestureRecognizer *)panGesture{
-    return YES;
-}
-
 @end

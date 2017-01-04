@@ -198,10 +198,10 @@
     }
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
-    UIViewController<ELTransitionProtocol> * vc =  self.topViewController;
-    return [vc respondsToSelector:@selector(canDragBackWithPan:)];
-}
+//- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+//    UIViewController<ELTransitionProtocol> * vc =  self.topViewController;
+//    return [vc respondsToSelector:@selector(canDragBackWithPan:)];
+//}
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     return NO;
@@ -209,11 +209,11 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
     UIViewController<ELTransitionProtocol> * vc =  self.topViewController;
-    if ([vc respondsToSelector:@selector(canDragBackWithPan:)]) {
-        return  [vc canDragBackWithPan:[self panGesture]];
+    if ([vc respondsToSelector:@selector(canDragBackWithPan:withTouch:)]) {
+        return [vc canDragBackWithPan:gestureRecognizer withTouch:touch];
     }
     else
-        return NO;
+        return YES;
 }
 
 

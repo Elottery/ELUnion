@@ -76,8 +76,8 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     __weak typeof(self) weakSelf = self;
     [self el_dismissViewControllerWithAnimationType:ELViewControllerTransitionAnimationTypeNoneAnimation animationComplete:^{
-        if (weakSelf.click) {
-            weakSelf.click(index);
+        if (weakSelf.cancel) {
+            weakSelf.cancel();
         }
     }];
 }
