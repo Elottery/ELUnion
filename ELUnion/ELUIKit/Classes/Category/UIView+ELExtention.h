@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-
+#import "ELViewExtention.h"
 
 
 typedef NS_ENUM(NSUInteger, ELExtentsionLoadingState) {
@@ -40,7 +40,7 @@ typedef NS_ENUM(NSUInteger, ELExtentsionLoadingProgressStyle) {
 @property (nonatomic,assign)BOOL leftLine;
 @property (nonatomic,assign)BOOL topLine;
 
-
+@property (nonatomic,strong)ELViewExtention * viewExtension;
 
 #pragma -mark loading
 //@property (nonatomic,assign)ELExtentsionLoadingState loadingState;

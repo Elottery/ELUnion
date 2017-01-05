@@ -203,4 +203,18 @@
     return self.frame.size;
 }
 
+-(ELViewExtention *)viewExtension{
+    
+    ELViewExtention * manager = objc_getAssociatedObject(self, _cmd);
+    
+    if (!manager) {
+        __weak typeof(self) weakSelf = self;
+        manager = [[ELViewExtention alloc]initWithView:weakSelf];
+        objc_setAssociatedObject(self, _cmd, manager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return manager;
+}
+
+
+
 @end
