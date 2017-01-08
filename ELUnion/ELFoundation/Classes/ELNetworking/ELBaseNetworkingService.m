@@ -169,13 +169,13 @@ static ELBaseNetworkingService * _sharedService;
                                                                          
                                                                      }
                                                                      else if(resp.status == 500){
-                                                                         error = [NSError errorWithDomain:EL_API_DOMAIN code:500 userInfo:@{NSLocalizedFailureReasonErrorKey:resp.memo}];
+                                                                         error = [NSError errorWithDomain:EL_API_DOMAIN code:500 userInfo:@{NSLocalizedFailureReasonErrorKey:resp.memo,@"protocol-id":[req protocolId]}];
                                                                      }
                                                                      else if (resp.status == 501) {
-                                                                         error = [NSError errorWithDomain:EL_API_DOMAIN code:501 userInfo:@{NSLocalizedFailureReasonErrorKey:resp.memo}];
+                                                                         error = [NSError errorWithDomain:EL_API_DOMAIN code:501 userInfo:@{NSLocalizedFailureReasonErrorKey:resp.memo,@"protocol-id":[req protocolId]}];
                                                                      }
                                                                      else{
-                                                                         error = [NSError errorWithDomain:EL_API_DOMAIN code:resp.status userInfo:@{NSLocalizedFailureReasonErrorKey:resp.memo}];
+                                                                         error = [NSError errorWithDomain:EL_API_DOMAIN code:resp.status userInfo:@{NSLocalizedFailureReasonErrorKey:resp.memo,@"protocol-id":[req protocolId]}];
                                                                      }
                                                                      responseBlock(resp,error);
                                                                  }
