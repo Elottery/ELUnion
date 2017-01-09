@@ -83,8 +83,6 @@
 
 -(void)setSelectedIndex:(NSInteger)selectedIndex animated:(BOOL)animated{
     
-    
-    
     [self.frontCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:selectedIndex inSection:0 ] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
     
     ELScrollTitleCell * cell = [self.frontCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_selectedIndex inSection:0]];

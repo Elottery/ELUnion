@@ -113,7 +113,7 @@
     if (self.childViewControllerCount <= selectIndex || selectIndex<0) {
         return;
     }
-    
+
     
     
     
@@ -145,6 +145,7 @@
             [self.context startAnimationTrasition];
         }
     }
+    
 }
 
 

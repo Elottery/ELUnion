@@ -42,7 +42,7 @@
 
 @property (nonatomic,assign)UIEdgeInsets containerViewEdge;
 
-@property (nonatomic,assign,readonly)NSUInteger currentIndex;
+@property (nonatomic,assign)NSUInteger currentIndex;
 
 @property (nonatomic,assign)NSUInteger selectIndex;
 
