@@ -120,6 +120,7 @@
 -(void)didPan:(UIPanGestureRecognizer *)pan{
     
     CGPoint panPoint = [pan translationInView:self.view];
+    
     switch (pan.state) {
         case UIGestureRecognizerStateBegan:
         {
@@ -137,6 +138,10 @@
             break;
         case UIGestureRecognizerStateChanged:
         {
+            
+            
+            
+            
             CGPoint startPoint   = [self panStartPoint];
             switch (self.el_navigationTransitionDelegate.popType) {
                 case ELViewControllerTransitionAnimationTypeFromBottomToTop:
@@ -215,7 +220,16 @@
     else
         return YES;
 }
-
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        CGPoint velo     = [(UIPanGestureRecognizer *)gestureRecognizer velocityInView:self.view];
+        if (fabs(velo.y)>fabs(velo.x)) {
+            return NO;
+        }
+        return YES;
+    }
+    return YES;
+}
 
 -(UIPanGestureRecognizer *)panGesture{
     UIPanGestureRecognizer * pan = objc_getAssociatedObject(self, _cmd);
