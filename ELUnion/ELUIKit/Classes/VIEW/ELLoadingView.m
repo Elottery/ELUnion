@@ -11,7 +11,7 @@
 //#import "UIView+ELFlexable.h"
 #import "ELBundleHelper.h"
 #import "ConstantsColors.h"
-
+#import "ELSuccessView.h"
 #define Default_Font        [UIFont systemFontOfSize:14]
 #define Default_Text_Color  UIColorFromRGB(0x777777)
 
@@ -50,7 +50,7 @@
 
 
 @interface _ELLoadingViewFailView : UIView
-@property (nonatomic,strong)UIImageView * failImageView;
+@property (nonatomic,strong)ELSuccessView * failImageView;
 @property (nonatomic,strong)UILabel     * failLabel;
 @property (nonatomic,strong)UIButton    * failButton;
 @end
@@ -61,10 +61,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.failLabel = [[UILabel alloc]initWithFrame:CGRectZero];
-        self.failImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
-        UIImage * image = [ELBundleHelper el_imageNamed:@"Cancel"];
-        
-        self.failImageView.image = image;
+        self.failImageView = [[ELSuccessView alloc]initWithFrame:CGRectZero];
+        self.failImageView.viewType = ELSuccessViewType_Error;
         self.failButton    = [UIButton buttonWithType:UIButtonTypeCustom];
         self.failButton.contentEdgeInsets = UIEdgeInsetsMake(10, 20, 10, 20);
         self.failLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -91,7 +89,7 @@
                                                                      metrics:nil
                                                                        views:@{@"label":self.failLabel}]];
         
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=20)-[image]-(>=20)-|"
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[image(40)]"
                                                                      options:0
                                                                      metrics:nil
                                                                        views:@{@"image":self.failImageView}]];
@@ -101,7 +99,7 @@
                                                                      metrics:nil
                                                                        views:@{@"button":self.failButton}]];
         
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=20)-[image]-10-[label]-10-[button]-(>=20)-|"
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[image(40)]-10-[label]-10-[button]-(>=20)-|"
                                                                      options:0
                                                                      metrics:nil
                                                                        views:@{@"label":self.failLabel,

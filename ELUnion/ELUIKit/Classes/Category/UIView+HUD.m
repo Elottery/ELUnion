@@ -10,6 +10,7 @@
 #import "MBProgressHUD.h"
 #import <objc/runtime.h>
 #import "ConstantsColors.h"
+#import "ELSuccessView.h"
 @implementation UIView (HUD)
 
 -(MBProgressHUD *)HUD{
@@ -49,7 +50,9 @@
 
 -(void)showSuccessHUD:(NSString *)text{
     [self.HUD showAnimated:YES];
+    ELSuccessView * view = [[ELSuccessView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
     self.HUD.mode = MBProgressHUDModeCustomView;
+    self.HUD.customView = view;
     self.HUD.label.text = text;
     self.HUD.label.font = ELTextSize04;
     self.HUD.label.numberOfLines = 0;
@@ -58,7 +61,10 @@
 
 -(void)showErrorHUD:(NSString *)text{
     [self.HUD showAnimated:YES];
+    ELSuccessView * view = [[ELSuccessView alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+    view.viewType = ELSuccessViewType_Error;
     self.HUD.mode = MBProgressHUDModeCustomView;
+    self.HUD.customView = view;
     self.HUD.label.text = text;
     self.HUD.label.font = ELTextSize04;
     [self.HUD hideAnimated:YES afterDelay:2];

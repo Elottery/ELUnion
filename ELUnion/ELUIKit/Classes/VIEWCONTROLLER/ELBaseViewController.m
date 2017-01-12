@@ -132,12 +132,10 @@
     [self.view layoutIfNeeded];
     if (hidden) {
         _navigationBarTopConstraint.constant = -64;
-        _mainViewTopConstraint.constant      = 0;
     }
     else{
         self.el_navigationBar.hidden = NO;
         _navigationBarTopConstraint.constant = 0;
-        _mainViewTopConstraint.constant      = 64;
     }
     
     
