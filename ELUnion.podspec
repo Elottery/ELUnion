@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name             = 'ELUnion'
-    spec.version          = '0.2.0'
+    spec.version          = '0.2.1'
     spec.summary          = 'A short description of ELUnion.'
     spec.description      = <<-DESC
     TODO: Add long description of the pod here.

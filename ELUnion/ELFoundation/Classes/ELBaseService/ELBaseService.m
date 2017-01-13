@@ -8,10 +8,12 @@
 
 #import "ELBaseService.h"
 
-#import "APPInfo.h"
+static ELBaseNetworkingServiceConfiguration * _globalConfiguration;
+
 @implementation ELBaseService
 {
     ELBaseNetworkingService * _netWorkService;
+    
 }
 
 - (instancetype)init
@@ -20,13 +22,16 @@
     if (self) {
         self.serviceState = ELBaseServiceHolding;
         _netWorkService =  [ELBaseNetworkingService sharedService];
-        ELBaseNetworkingServiceConfiguration * conf = [[ELBaseNetworkingServiceConfiguration alloc]init];
-        conf.HOST = [APPInfo APIHOST];
-        conf.clientVersion = [APPInfo apiVersion];
-        _netWorkService.defaultConfig = conf;
+        _netWorkService.defaultConfig = _globalConfiguration;
     }
     return self;
 }
+
++(void)setGlobalNetworkingConfiguration:(ELBaseNetworkingServiceConfiguration *)config{
+    _globalConfiguration = config;
+}
+
+
 
 -(void)loadData{
     id<ELRequestProtocol> requestObj = self.request;

@@ -70,6 +70,8 @@ typedef NS_ENUM(NSUInteger, ELBaseServiceState) {
 
 @property (nonatomic,weak)id<ELBaseServiceDelegate> delegate;
 
++(void)setGlobalNetworkingConfiguration:(ELBaseNetworkingServiceConfiguration *)config;
+
 -(void)loadData;
 
 #pragma mark -subclassing
