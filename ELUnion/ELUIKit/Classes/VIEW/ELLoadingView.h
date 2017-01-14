@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSUInteger, ELLoadingViewState) {
     ELLoadingViewState_Loading,
     ELLoadingViewState_Fail,
+    ELLoadingViewState_Empty,
 };
 
 

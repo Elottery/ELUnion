@@ -22,6 +22,8 @@
         layer.fillColor = [UIColor clearColor].CGColor;
         layer.lineCap = @"round";
         layer.lineJoin = @"round";
+        //线条颜色
+        layer.strokeColor = [UIColor colorWithRed:0.396 green:0.396 blue:0.396 alpha:1.00].CGColor;
         [self.layer addSublayer:layer];
         
     }
@@ -52,8 +54,7 @@
             CGPoint p2 = CGPointMake(self.frame.size.width, self.frame.size.height/8);
             [path addLineToPoint:p2];
 
-            //线条颜色
-            layer.strokeColor = [UIColor colorWithRed:0.396 green:0.396 blue:0.396 alpha:1.00].CGColor;
+            
             //线条宽度
             layer.lineWidth = 4;
             layer.path = path.CGPath;
@@ -74,8 +75,6 @@
             
             [path moveToPoint:CGPointMake(self.frame.size.width-4, 4)];
             [path addLineToPoint:CGPointMake(4, self.frame.size.height-4)];
-            //线条颜色
-            layer.strokeColor = [UIColor colorWithRed:0.396 green:0.396 blue:0.396 alpha:1.00].CGColor;
             //线条宽度
             layer.lineWidth = 4;
             layer.path = path.CGPath;
@@ -87,6 +86,11 @@
     
     
     
+}
+
+-(void)setStrokeColor:(UIColor *)strokeColor{
+    _strokeColor = strokeColor;
+    layer.strokeColor = strokeColor.CGColor;
 }
 
 

@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name             = 'ELUnion'
-    spec.version          = '0.2.1'
+    spec.version          = '0.2.2'
     spec.summary          = 'A short description of ELUnion.'
     spec.description      = <<-DESC
     TODO: Add long description of the pod here.
@@ -62,6 +62,7 @@ Pod::Spec.new do |spec|
         cs.dependency      'SDWebImage'
         cs.dependency      'DYMRollingBanner', '~> 2.1.7'
         cs.dependency      'MBProgressHUD'
-        cs.dependency      'MJRefresh', '~> 3.1.10'     
+        cs.dependency      'MJRefresh', '~> 3.1.10'
+        cs.dependency      'DZNEmptyDataSet'
     end
 end

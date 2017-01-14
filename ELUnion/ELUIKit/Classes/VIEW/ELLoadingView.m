@@ -13,8 +13,16 @@
 #import "ConstantsColors.h"
 #import "ELSuccessView.h"
 #define Default_Font        [UIFont systemFontOfSize:14]
-#define Default_Text_Color  UIColorFromRGB(0x777777)
+#define Default_Text_Color  UIColorFromRGB(0x999999)
 
+@interface _ELLoadingViewEmptyView : UIView
+
+@end
+
+@implementation _ELLoadingViewEmptyView
+
+
+@end
 
 
 @interface _ELLoadingViewLoadingView : UIView
@@ -28,6 +36,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
         self.indicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         self.loadingLabel = [[UILabel alloc]init];
         
@@ -50,6 +59,9 @@
 
 
 @interface _ELLoadingViewFailView : UIView
+{
+    CAShapeLayer * boardLayer;
+}
 @property (nonatomic,strong)ELSuccessView * failImageView;
 @property (nonatomic,strong)UILabel     * failLabel;
 @property (nonatomic,strong)UIButton    * failButton;
@@ -63,6 +75,7 @@
         self.failLabel = [[UILabel alloc]initWithFrame:CGRectZero];
         self.failImageView = [[ELSuccessView alloc]initWithFrame:CGRectZero];
         self.failImageView.viewType = ELSuccessViewType_Error;
+        self.failImageView.strokeColor = Default_Text_Color;
         self.failButton    = [UIButton buttonWithType:UIButtonTypeCustom];
         self.failButton.contentEdgeInsets = UIEdgeInsetsMake(10, 20, 10, 20);
         self.failLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -99,7 +112,7 @@
                                                                      metrics:nil
                                                                        views:@{@"button":self.failButton}]];
         
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[image(40)]-10-[label]-10-[button]-(>=20)-|"
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[image(40)]-10-[label]-20-[button]-(>=20)-|"
                                                                      options:0
                                                                      metrics:nil
                                                                        views:@{@"label":self.failLabel,
@@ -107,12 +120,37 @@
                                                                                @"button":self.failButton}]];
         
         
+        [self layoutIfNeeded];
         
+//        self.failButton.layer.borderColor = Default_Text_Color.CGColor;
+//        self.failButton.layer.borderWidth = 1;
+//        self.failButton.layer.cornerRadius = 5;
+//        self.failButton.layer.masksToBounds = YES;
+        
+        
+        boardLayer = [[CAShapeLayer alloc]init];
+        boardLayer.strokeColor = Default_Text_Color.CGColor;
+        boardLayer.lineWidth = 1;
+        boardLayer.fillColor = [UIColor clearColor].CGColor;
+        [self.failButton.layer addSublayer:boardLayer];
         
         
     }
     return self;
 }
+
+
+-(void)layoutSubviews{
+    [super layoutSubviews];
+    boardLayer.frame = self.failButton.bounds;
+    UIBezierPath * path = [UIBezierPath bezierPathWithRoundedRect:self.failButton.bounds cornerRadius:3];
+    boardLayer.path = path.CGPath;
+    
+    
+    
+}
+
+
 @end
 
 
@@ -127,6 +165,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = UIColorFromRGB(0xffffff);
         self.hidden = YES;
     }
     return self;
@@ -262,11 +301,6 @@
             }
             [failLoading.failButton setAttributedTitle:btnstr forState:UIControlStateNormal];
             [failLoading.failButton addTarget:self action:@selector(reloadBtnClick) forControlEvents:UIControlEventTouchUpInside];
-            failLoading.failButton.backgroundColor = [UIColor colorWithRed:0.600 green:0.600 blue:0.600 alpha:0.20];
-            failLoading.failButton.layer.borderColor = Default_Text_Color.CGColor;
-            failLoading.failButton.layer.borderWidth = 0.5;
-            failLoading.failButton.layer.cornerRadius = 3;
-            failLoading.failButton.layer.masksToBounds = YES;
             return failLoading;
         }
             break;

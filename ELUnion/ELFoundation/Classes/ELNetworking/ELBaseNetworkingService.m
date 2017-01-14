@@ -223,7 +223,7 @@ static ELBaseNetworkingService * _sharedService;
 }
 
 -(NSString *)agent{
-    return  [NSString stringWithFormat:@"%@-%@",[UIDevice currentDevice].systemName,[UIDevice currentDevice].systemVersion];
+    return  [NSString stringWithFormat:@"iOS-%@",[UIDevice currentDevice].systemVersion];
 }
 
 

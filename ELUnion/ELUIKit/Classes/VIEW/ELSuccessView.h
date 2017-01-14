@@ -17,4 +17,6 @@ typedef NS_ENUM(NSUInteger, ELSuccessViewType) {
 
 @interface ELSuccessView : UIView
 @property (nonatomic,assign)ELSuccessViewType viewType;
+@property (nonatomic,strong)UIColor * strokeColor;
+
 @end

@@ -137,13 +137,9 @@ static ELShareService * _sharedService;
         [WXApi sendReq:req];
     }
     else{
-//        if (![TencentOAuth iphoneQQInstalled]) {
-//            NSError * error = [NSError errorWithDomain:@"share" code:500 userInfo:@{NSLocalizedDescriptionKey:@"您的设备没有安装QQ"}];
-//            self.complete(NO,error);
-//            return;
-//        }
+
         
-        QQApiNewsObject * shareObj = [QQApiNewsObject objectWithURL:[NSURL URLWithString:url] title:title description:@"asdfasdfasdf"   previewImageData:thumnailImage];
+        QQApiNewsObject * shareObj = [QQApiNewsObject objectWithURL:[NSURL URLWithString:url] title:title description:@""   previewImageData:thumnailImage];
         
         SendMessageToQQReq * req = [SendMessageToQQReq reqWithContent:shareObj];
         req.type = ESENDMESSAGETOQQREQTYPE;
@@ -193,7 +189,7 @@ static ELShareService * _sharedService;
         }
         else{
             if (self.complete) {
-                NSError * error = [NSError errorWithDomain:@"share" code:[resp.result integerValue] userInfo:@{NSLocalizedDescriptionKey:resp.errorDescription?:@"分享失败"}];
+                NSError * error = [NSError errorWithDomain:@"share" code:[resp.result integerValue] userInfo:@{NSLocalizedFailureReasonErrorKey:resp.errorDescription?:@"分享失败"}];
                 self.complete(NO,error);
             }
         }
@@ -207,7 +203,7 @@ static ELShareService * _sharedService;
         }
         else{
             if (self.complete) {
-                NSError * error = [NSError errorWithDomain:@"share" code:resp.errCode userInfo:@{NSLocalizedDescriptionKey:resp.errStr?:@"分享失败"}];
+                NSError * error = [NSError errorWithDomain:@"share" code:resp.errCode userInfo:@{NSLocalizedFailureReasonErrorKey:resp.errStr?:@"分享失败"}];
                 self.complete(NO,error);
             }
         }
