@@ -10,9 +10,9 @@ PODS:
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
   - DYMRollingBanner (2.1.7)
-  - ELUnion (0.1.5):
-    - ELUnion/ELUIKit (= 0.1.5)
-  - ELUnion/ELFoundation (0.1.5):
+  - ELUnion (0.2.3):
+    - ELUnion/ELUIKit (= 0.2.3)
+  - ELUnion/ELFoundation (0.2.3):
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
@@ -21,19 +21,19 @@ PODS:
     - ELUnion/ThirdLib
     - HYFileManager
     - JSONModel (~> 1.2.0)
-  - ELUnion/ELUIKit (0.1.5):
+  - ELUnion/ELUIKit (0.2.3):
     - DYMRollingBanner (~> 2.1.7)
     - ELUnion/ELFoundation
     - MBProgressHUD
     - MJRefresh (~> 3.1.10)
     - SDWebImage
-  - ELUnion/ThirdLib (0.1.5):
-    - ELUnion/ThirdLib/BaiduMob (= 0.1.5)
-    - ELUnion/ThirdLib/Tencent (= 0.1.5)
-    - ELUnion/ThirdLib/Wechat (= 0.1.5)
-  - ELUnion/ThirdLib/BaiduMob (0.1.5)
-  - ELUnion/ThirdLib/Tencent (0.1.5)
-  - ELUnion/ThirdLib/Wechat (0.1.5)
+  - ELUnion/ThirdLib (0.2.3):
+    - ELUnion/ThirdLib/BaiduMob (= 0.2.3)
+    - ELUnion/ThirdLib/Tencent (= 0.2.3)
+    - ELUnion/ThirdLib/Wechat (= 0.2.3)
+  - ELUnion/ThirdLib/BaiduMob (0.2.3)
+  - ELUnion/ThirdLib/Tencent (0.2.3)
+  - ELUnion/ThirdLib/Wechat (0.2.3)
   - HYFileManager (0.1.2)
   - JSONModel (1.2.0)
   - MBProgressHUD (1.0.0)
@@ -53,7 +53,7 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   DYMRollingBanner: bec43636e04ac2f57a58fddf2f887d2ca9156016
-  ELUnion: 7b1a809c210ea1b71fa91b635ae5ac8fd459e692
+  ELUnion: 71c9ab693a1dd0ef60f85a08be127deac49a5d18
   HYFileManager: 53dcc79242c2b7609c2161a2f841841b6b08ca9b
   JSONModel: 12523685c4b623553ccf844bbbf7007624317b2c
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
