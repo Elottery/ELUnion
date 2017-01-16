@@ -26,4 +26,8 @@
 
 -(void)asyncSaveContext;
 
+-(BOOL)isMigrationNecessary;
+
+- (BOOL)migrateStore:(NSURL*)sourceStore;
+
 @end

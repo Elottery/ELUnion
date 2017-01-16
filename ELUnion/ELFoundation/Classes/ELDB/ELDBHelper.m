@@ -7,7 +7,7 @@
 //
 
 #import "ELDBHelper.h"
-
+#import <HYFileManager.h>
 @interface ELDBHelper ()
 {
     NSManagedObjectContext * _context;
@@ -17,6 +17,7 @@
 @property (nonatomic,strong)NSManagedObjectModel         * model;
 @property (nonatomic,strong)NSPersistentStore            * store;
 @property (nonatomic,strong)NSArray<NSManagedObjectModel *> * models;
+@property (nonatomic,strong)NSURL   * filePathURL;
 @end
 
 @implementation ELDBHelper
@@ -30,6 +31,7 @@
     
     self = [super init];
     if (self) {
+        self.filePathURL = filePath;
         self.models = models;
         [self loadStoreWithDBFilePath:filePath];
     }
@@ -79,6 +81,106 @@
             }
         }];
     }
+}
+
+- (BOOL)isMigrationNecessary{
+    NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
+    if (![[NSFileManager defaultManager] fileExistsAtPath:self.filePathURL.path]) {
+        NSLog(@"SKIPPED MIGRATION: Source database missing.");
+        return NO;
+    }
+    NSError *error = nil;
+    NSDictionary *sourceMetadata =
+    [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType
+                                                               URL:self.filePathURL error:&error];
+    NSManagedObjectModel *destinationModel = _coordinator.managedObjectModel;
+    if ([destinationModel isConfiguration:nil
+              compatibleWithStoreMetadata:sourceMetadata]) {
+            NSLog(@"SKIPPED MIGRATION: Source is already compatible");
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)migrateStore:(NSURL*)sourceStore {
+    BOOL success = NO;
+    NSError *error = nil;
+    
+    // STEP 1 - Gather the Source, Destination and Mapping Model
+    NSDictionary *sourceMetadata = [NSPersistentStoreCoordinator
+                                    metadataForPersistentStoreOfType:NSSQLiteStoreType
+                                    URL:sourceStore
+                                    error:&error];
+    
+    NSManagedObjectModel *sourceModel =
+    [NSManagedObjectModel mergedModelFromBundles:nil
+                                forStoreMetadata:sourceMetadata];
+    
+    NSManagedObjectModel *destinModel = _model;
+    
+    NSMappingModel *mappingModel =
+    [NSMappingModel mappingModelFromBundles:nil
+                             forSourceModel:sourceModel
+                           destinationModel:destinModel];
+    
+    // STEP 2 - Perform migration, assuming the mapping model isn't null
+    if (mappingModel) {
+        NSError *error = nil;
+        NSMigrationManager *migrationManager =
+        [[NSMigrationManager alloc] initWithSourceModel:sourceModel
+                                       destinationModel:destinModel];
+        [migrationManager addObserver:self
+                           forKeyPath:@"migrationProgress"
+                              options:NSKeyValueObservingOptionNew
+                              context:NULL];
+        
+        NSURL *destinStore = [[NSURL URLWithString:[HYFileManager tmpDir]]URLByAppendingPathComponent:@"Temp.sqlite"];
+        
+        success =
+        [migrationManager migrateStoreFromURL:sourceStore
+                                         type:NSSQLiteStoreType options:nil
+                             withMappingModel:mappingModel
+                             toDestinationURL:destinStore
+                              destinationType:NSSQLiteStoreType
+                           destinationOptions:nil
+                                        error:&error];
+        if (success) {
+            // STEP 3 - Replace the old store with the new migrated store
+            if ([self replaceStore:sourceStore withStore:destinStore]) {
+                    NSLog(@"SUCCESSFULLY MIGRATED %@ to the Current Model",sourceStore.path);
+                [migrationManager removeObserver:self
+                                      forKeyPath:@"migrationProgress"];
+            }
+        }
+        else {
+            NSLog(@"FAILED MIGRATION: %@",error);
+        }
+    }
+    else {
+        NSLog(@"FAILED MIGRATION: Mapping Model is null");
+    }
+    return YES; // indicates migration has finished, regardless of outcome
+}
+- (BOOL)replaceStore:(NSURL*)old withStore:(NSURL*)new {
+    
+    BOOL success = NO;
+    NSError *Error = nil;
+    if ([[NSFileManager defaultManager]
+         removeItemAtURL:old error:&Error]) {
+        
+        Error = nil;
+        if ([[NSFileManager defaultManager]
+             moveItemAtURL:new toURL:old error:&Error]) {
+            success = YES;
+        }
+        else {
+            NSLog(@"FAILED to re-home new store %@", Error);
+        }
+    }
+    else {
+            NSLog(@"FAILED to remove old store %@: Error:%@", old, Error);
+    }
+    return success;
 }
 
 -(NSManagedObjectModel *)model{
