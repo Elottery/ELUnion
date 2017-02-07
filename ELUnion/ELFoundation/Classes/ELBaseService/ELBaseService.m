@@ -8,7 +8,7 @@
 
 #import "ELBaseService.h"
 
-static ELBaseNetworkingServiceConfiguration * _globalConfiguration;
+
 
 @implementation ELBaseService
 {
@@ -22,18 +22,18 @@ static ELBaseNetworkingServiceConfiguration * _globalConfiguration;
     if (self) {
         self.serviceState = ELBaseServiceHolding;
         _netWorkService =  [ELBaseNetworkingService sharedService];
-        _netWorkService.defaultConfig = _globalConfiguration;
     }
     return self;
 }
 
 +(void)setGlobalNetworkingConfiguration:(ELBaseNetworkingServiceConfiguration *)config{
-    _globalConfiguration = config;
+    [ELBaseNetworkingService sharedService].defaultConfig = config;
 }
 
 
 
 -(void)loadData{
+    
     id<ELRequestProtocol> requestObj = self.request;
     if (!requestObj) {
         NSLog(@"请求不可为空");
@@ -66,8 +66,6 @@ static ELBaseNetworkingServiceConfiguration * _globalConfiguration;
                 [weakSelf.delegate service:weakSelf loadDataFailWithError:error];
             }
             else{
-//                [[NSUserDefaults standardUserDefaults]setObject:[response header].sid forKey:ELBaseNetworkingService_JSESSIONID];
-//                [[NSUserDefaults standardUserDefaults]synchronize];
                 [weakSelf.delegate service:weakSelf loadDataSuccessWithResponse:response];
             }
         }

@@ -36,15 +36,6 @@
 -(void)endRefreshFooterAndReloadTableView:(BOOL)reload;//默认page增加1
 -(void)endRefreshFooterAndReloadTableView:(BOOL)reload updatePageCounting:(BOOL)update;
 
-
-
-
 -(void)loadDataAtPageIndex:(NSUInteger)pageIndex withPageSize:(NSUInteger)pageSize;
-
-
-
-
-
-
 
 @end

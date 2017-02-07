@@ -28,6 +28,8 @@ typedef void(^ELResponseBlock)(id<ELResponseProtocol> response,NSError * error);
 
 @property (nonatomic,strong)ELBaseNetworkingServiceConfiguration * defaultConfig;
 
+
+
 /**
  *  请求方法
  *
