@@ -136,23 +136,23 @@ static ELBaseNetworkingService * _sharedService;
 
 -(NSString *)wokeHeaderWithProtocolId:(NSString *)protocolId{
     NSString * woke = [NSString stringWithFormat:@"client-version:%@;protocol-id:%@;c-time=%ld;",
-                       self.defaultConfig.clientVersion,
+                       self.defaultConfig.apiVersion,
                        protocolId,
                        (long)[NSDate timeIntervalSinceReferenceDate]];
     return woke;
 }
 
 -(NSString *)agent{
-    return  [NSString stringWithFormat:@"iOS-%@",[UIDevice currentDevice].systemVersion];
+    return  [NSString stringWithFormat:@"iOS-%@",self.defaultConfig.clientVersion];
 }
 
 -(void)setDefaultConfig:(ELBaseNetworkingServiceConfiguration *)defaultConfig{
     _defaultConfig = defaultConfig;
-    AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
-    policy.allowInvalidCertificates = YES;//是否允许使用自签名证书
-    policy.validatesDomainName = NO;
-    self.sessionManager.securityPolicy = policy;
     if (_defaultConfig.certificateData) {
+        AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
+        policy.allowInvalidCertificates = YES;//是否允许使用自签名证书
+        policy.validatesDomainName = NO;
+        self.sessionManager.securityPolicy = policy;
         NSSet *set = [[NSSet alloc] initWithObjects:_defaultConfig.certificateData, nil];
         policy.pinnedCertificates = set;
     }

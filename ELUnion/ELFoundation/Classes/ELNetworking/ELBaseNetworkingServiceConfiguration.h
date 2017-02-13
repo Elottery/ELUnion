@@ -12,6 +12,8 @@
 
 @property (nonatomic,copy)  NSString     * HOST;
 
+@property (nonatomic,copy)  NSString     * apiVersion;
+
 @property (nonatomic,copy)  NSString     * clientVersion;
 
 @property (nonatomic,copy)  NSData       * certificateData;

@@ -8,7 +8,7 @@
 
 #import "ELPaoMaDeng.h"
 
-@interface ELPaoMaDengCell : UIView
+@interface ELPaoMaDengCell : UIControl
 @property (nonatomic,strong)UILabel * label;
 @end
 
@@ -67,6 +67,7 @@
         self.rowView_1 = [[ELPaoMaDengCell alloc]initWithFrame:CGRectMake(0, 0, width, height)];
         self.rowView_1.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.rowView_1.backgroundColor = [UIColor whiteColor];
+        [self.rowView_1 addTarget:self action:@selector(didSelectCell:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:self.rowView_1];
     }
     if (!self.rowView_2) {
@@ -74,8 +75,20 @@
         self.rowView_2.backgroundColor = [UIColor whiteColor];
         self.rowView_2.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.scrollView addSubview:self.rowView_2];
+        [self.rowView_2 addTarget:self action:@selector(didSelectCell:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
+
+-(void)didSelectCell:(ELPaoMaDengCell *)cell{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(paomadeng:didSelectAtIndex:)]) {
+        NSUInteger numberOfRow = [self.delegate numberOfRowInPaomadeng];
+        if (numberOfRow == 0) {
+            return;
+        }
+        [self.delegate paomadeng:self didSelectAtIndex:self.index%numberOfRow];
+    }
+}
+
 
 -(void)reloadData{
     self.index = 0;

@@ -182,7 +182,7 @@ static ELShareService * _sharedService;
 -(void) onResp:(id)response{
     if ([response isKindOfClass:[QQBaseResp class]]) {//qq
         QQBaseResp * resp = (QQBaseResp *)response;
-        if (resp.result == 0) {//成功
+        if ([resp.result isEqualToString:@"0"]) {//成功
             if (self.complete) {
                 self.complete(YES,nil);
             }
