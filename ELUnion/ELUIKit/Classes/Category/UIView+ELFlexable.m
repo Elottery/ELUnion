@@ -31,7 +31,7 @@
     CGSize originalSize = [self sw_intrinsicContentSize];
     CGSize editedSize   = CGSizeMake(originalSize.width + self.edge.left + self.edge.right,
                                      originalSize.height + self.edge.top + self.edge.bottom);
-    self.layer.cornerRadius = editedSize.height/2 * self.conerRatio;
+//    self.layer.cornerRadius = editedSize.height/2 * self.conerRatio;
     return editedSize;
 }
 -(UIEdgeInsets)edge{
