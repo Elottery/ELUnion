@@ -111,7 +111,7 @@
         UIViewController<ELTransitionProtocol> * vc = (UIViewController<ELTransitionProtocol> *)self.topViewController;
         self.el_navigationTransitionDelegate.popType = [vc popedTransitionType];
         
-        self.el_navigationTransitionDelegate.interact = NO;
+        self.el_navigationTransitionDelegate.interact = [self interacting];
     }
     return  [self el_popToViewController:viewController animated:animated];
 }
@@ -129,11 +129,23 @@
             if ([vc respondsToSelector:@selector(popedTransitionType)]) {
                 [self setPanStartPoint:panPoint];
                 [self setStartPercent:0];
-//                UIViewController<ELTransitionProtocol> * vc = self.topViewController;
-//                self.el_navigationTransitionDelegate.popType = [vc popedTransitionType];
-//                self.el_navigationTransitionDelegate.interact = YES;
             }
-            [self popViewControllerAnimated:YES];
+            
+//            self.el_navigationTransitionDelegate = nil;
+            if ([self.topViewController respondsToSelector:NSSelectorFromString(@"el_popDestinationViewController")]) {
+                UIViewController * destinationVC = [self.topViewController performSelector:NSSelectorFromString(@"el_popDestinationViewController")];
+                if (destinationVC) {
+                    [self popToViewController:destinationVC animated:YES];
+                }
+                else{
+                    [self popViewControllerAnimated:YES];
+                }
+            }
+            else{
+                [self popViewControllerAnimated:YES];
+            }
+            
+            
         }
             break;
         case UIGestureRecognizerStateChanged:

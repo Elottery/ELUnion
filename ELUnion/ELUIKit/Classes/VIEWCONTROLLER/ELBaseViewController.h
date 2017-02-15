@@ -58,6 +58,8 @@
 
 @property (nonatomic,weak,readonly)ELBaseTabbarController * el_tabbarController;
 
+@property (nonatomic,weak)UIViewController * el_popDestinationViewController;
+
 - (void)backBtnClick;
 
 @end

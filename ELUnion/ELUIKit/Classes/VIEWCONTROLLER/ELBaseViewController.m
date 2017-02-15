@@ -115,7 +115,13 @@
 -(void)backBtnClick{
     if ([self canBackBtnClick]) {
         [self willNavigationBack];
-        [self.navigationController popViewControllerAnimated:YES];
+        if (self.el_popDestinationViewController) {
+            [self.navigationController popToViewController:self.el_popDestinationViewController animated:YES];
+        }
+        else{
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
     }
 }
 

@@ -17,8 +17,6 @@
 
 @property (nonatomic,strong)ELNavigationAnimationTransitionDelegate * el_navigationTransitionDelegate;
 
-
-
 //-(void)el_pushViewController:(UIViewController *)viewController animationType:(ELViewControllerTransitionAnimationType)type;
 //
 //-(UIViewController *)el_popViewControllerWithAnimationType:(ELViewControllerTransitionAnimationType)type;
