@@ -19,8 +19,7 @@ typedef id<ELRequestProtocol>(^ELReturnRequestBlock)();
 typedef BOOL(^ELReturnBoolBlock)();
 typedef NSString *(^ELReturnStringBlock)();
 typedef void(^ELNormalBlock)();
-typedef void(^ELProgressBlock)(NSProgress * progress);
-typedef void(^ELResponseBlock)(id<ELResponseProtocol> response,NSError * error);
+
 
 @interface ELBaseNetworkingService : NSObject
 
@@ -48,3 +47,4 @@ typedef void(^ELResponseBlock)(id<ELResponseProtocol> response,NSError * error);
 
 
 @end
+

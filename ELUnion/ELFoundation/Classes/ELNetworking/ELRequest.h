@@ -6,51 +6,43 @@
 //  Copyright © 2016年 金秋成. All rights reserved.
 //
 
-#import <JSONModel/JSONModel.h>
 #import "ELResponse.h"
 
+typedef void(^ELProgressBlock)(NSProgress * progress);
+typedef void(^ELResponseBlock)(id<ELResponseProtocol> response,NSError * error);
+typedef void(^ELJSONResponseBlock)(NSDictionary * responseJSON,NSError * error);
+typedef BOOL(^ELValidateBlock)(NSDictionary * paramDict);
 
-@protocol ELRequestProtocol <NSObject>
+typedef NS_ENUM(NSUInteger, ELRequestType) {
+    ELRequestType_GET,
+    ELRequestType_POST,
+};
 
-/**
- *  接口地址协议
- *
- *  @return 接口地址
- */
-//- (NSString *)methodURLStr;
-- (NSString *)protocolId;
-/**
- *  响应的对象类型
- *
- *  @return 响应的对象类型
- */
-- (Class<ELResponseProtocol>)responseClass;
-/**
- *  是否需要登陆权限
- *
- *  @return 需要YES 不需要NO
- */
-- (BOOL)needTokenAuth;
+@interface ELRequest : NSObject
 
-@optional
-/**
- *  aes加密KEY
- *
- *  @return aes加密KEY
- */
-- (NSString *)encryptKey;
+@property (nonatomic,strong,readonly)NSString * URLPath;
+@property (nonatomic,assign,readonly)BOOL       https;
+@property (nonatomic,assign,readonly)ELRequestType       type;
+@property (nonatomic,strong,readonly)NSDictionary * headerDict;
+@property (nonatomic,strong,readonly)NSDictionary * paramDict;
+@property (nonatomic,copy,readonly)ELValidateBlock validateBlock;
+@property (nonatomic,copy,readonly)ELProgressBlock progressBlock;
+@property (nonatomic,copy,readonly)ELResponseBlock responseBlock;
 
-- (NSDictionary *)requestDictionary;
+@property (nonatomic,strong,readonly)NSURLRequest * request;
 
-- (NSString *)toJSONString;
+-(instancetype)initWithURLPath:(NSString *)URLPath
+                      useHttps:(BOOL)https
+                        header:(NSDictionary *)headerDict
+                          type:(ELRequestType)type
+                        params:(NSDictionary *)paramDict;
 
-- (BOOL)isFileData;
+//不会触发请求动作
+-(instancetype)validate:(ELValidateBlock)validateBlock;
+//不会触发请求动作
+-(instancetype)progress:(ELProgressBlock)progressBlock;
+//会触发请求动作
+-(void)response:(ELResponseBlock)responseBlock;
 
-- (NSData *)fileData;
-
-
-@end
-
-@interface ELRequest : JSONModel<ELRequestProtocol>
 
 @end
