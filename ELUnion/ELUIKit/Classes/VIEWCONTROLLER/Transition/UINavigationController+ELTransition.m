@@ -7,7 +7,7 @@
 //
 
 #import "UINavigationController+ELTransition.h"
-
+#import "ELBaseViewController.h"
 #import <objc/runtime.h>
 
 @implementation UINavigationController (ELTransition)
@@ -130,10 +130,9 @@
                 [self setPanStartPoint:panPoint];
                 [self setStartPercent:0];
             }
-            
-//            self.el_navigationTransitionDelegate = nil;
-            if ([self.topViewController respondsToSelector:NSSelectorFromString(@"el_popDestinationViewController")]) {
-                UIViewController * destinationVC = [self.topViewController performSelector:NSSelectorFromString(@"el_popDestinationViewController")];
+
+            if ([self.topViewController respondsToSelector:@selector(el_popDestinationViewController)]) {
+                UIViewController * destinationVC = [self.topViewController performSelector:@selector(el_popDestinationViewController)];
                 if (destinationVC) {
                     [self popToViewController:destinationVC animated:YES];
                 }

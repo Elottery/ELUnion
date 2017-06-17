@@ -9,7 +9,6 @@
 #import "ELSocket.h"
 #import "ELSocketConstant.h"
 #import "ELMessageSendingTaskManager.h"
-#import "HYFileManager.h"
 #import "GCDAsyncSocket.h"
 
 
@@ -230,7 +229,10 @@ completionHandler:(void (^)(BOOL shouldTrustPeer))completionHandler{
 
 
 -(NSURL *)dbURL{
-    NSString * dbPath = [[HYFileManager documentsDir]stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite",self.username]];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString * dbPath = [docDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite",self.username]];
     _dbURL = [NSURL URLWithString:dbPath];
     return _dbURL;
 }

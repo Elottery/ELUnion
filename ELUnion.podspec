@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name             = 'ELUnion'
-    spec.version          = '0.2.7'
+    spec.version          = '0.2.8'
     spec.summary          = 'A short description of ELUnion.'
     spec.description      = <<-DESC
     TODO: Add long description of the pod here.
@@ -24,7 +24,6 @@ Pod::Spec.new do |spec|
         cs.dependency 'AFNetworking/Reachability'
         cs.dependency 'AFNetworking/NSURLSession'
         cs.dependency 'JSONModel', '~> 1.2.0'
-        cs.dependency 'HYFileManager'
         cs.dependency 'CocoaAsyncSocket', '~> 7.5.0'
         cs.dependency 'ELUnion/ThirdLib'
     end

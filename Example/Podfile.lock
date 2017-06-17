@@ -10,31 +10,29 @@ PODS:
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
   - DYMRollingBanner (2.1.7)
-  - ELUnion (0.2.3):
-    - ELUnion/ELUIKit (= 0.2.3)
-  - ELUnion/ELFoundation (0.2.3):
+  - ELUnion (0.2.7):
+    - ELUnion/ELUIKit (= 0.2.7)
+  - ELUnion/ELFoundation (0.2.7):
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - CocoaAsyncSocket (~> 7.5.0)
     - ELUnion/ThirdLib
-    - HYFileManager
     - JSONModel (~> 1.2.0)
-  - ELUnion/ELUIKit (0.2.3):
+  - ELUnion/ELUIKit (0.2.7):
     - DYMRollingBanner (~> 2.1.7)
     - ELUnion/ELFoundation
     - MBProgressHUD
     - MJRefresh (~> 3.1.10)
     - SDWebImage
-  - ELUnion/ThirdLib (0.2.3):
-    - ELUnion/ThirdLib/BaiduMob (= 0.2.3)
-    - ELUnion/ThirdLib/Tencent (= 0.2.3)
-    - ELUnion/ThirdLib/Wechat (= 0.2.3)
-  - ELUnion/ThirdLib/BaiduMob (0.2.3)
-  - ELUnion/ThirdLib/Tencent (0.2.3)
-  - ELUnion/ThirdLib/Wechat (0.2.3)
-  - HYFileManager (0.1.2)
+  - ELUnion/ThirdLib (0.2.7):
+    - ELUnion/ThirdLib/BaiduMob (= 0.2.7)
+    - ELUnion/ThirdLib/Tencent (= 0.2.7)
+    - ELUnion/ThirdLib/Wechat (= 0.2.7)
+  - ELUnion/ThirdLib/BaiduMob (0.2.7)
+  - ELUnion/ThirdLib/Tencent (0.2.7)
+  - ELUnion/ThirdLib/Wechat (0.2.7)
   - JSONModel (1.2.0)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
@@ -47,14 +45,13 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   ELUnion:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   DYMRollingBanner: bec43636e04ac2f57a58fddf2f887d2ca9156016
-  ELUnion: 71c9ab693a1dd0ef60f85a08be127deac49a5d18
-  HYFileManager: 53dcc79242c2b7609c2161a2f841841b6b08ca9b
+  ELUnion: 69727b3dfe43a30d1f6b0f6a502149ec1558b10f
   JSONModel: 12523685c4b623553ccf844bbbf7007624317b2c
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
@@ -62,4 +59,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 2acf3d13271bca5d59cc4091de40723da5ded05c
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.1

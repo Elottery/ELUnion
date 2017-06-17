@@ -7,7 +7,6 @@
 //
 
 #import "ELDBHelper.h"
-#import "HYFileManager.h"
 @interface ELDBHelper ()
 {
     NSManagedObjectContext * _context;
@@ -133,8 +132,8 @@
                            forKeyPath:@"migrationProgress"
                               options:NSKeyValueObservingOptionNew
                               context:NULL];
-        
-        NSURL *destinStore = [[NSURL URLWithString:[HYFileManager tmpDir]]URLByAppendingPathComponent:@"Temp.sqlite"];
+    
+        NSURL *destinStore = [[NSURL URLWithString:NSTemporaryDirectory()]URLByAppendingPathComponent:@"Temp.sqlite"];
         
         success =
         [migrationManager migrateStoreFromURL:sourceStore
